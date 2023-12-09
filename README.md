@@ -1,1 +1,1 @@
-Currently we are creating a simple version of " Rolling Sky " with using few helper libraries only 
+Currently we are creating a simple version of 3D game " Rolling Sky " by using WebGL and with the help of few helper libraries 
