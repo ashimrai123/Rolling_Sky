@@ -88,6 +88,52 @@ const modelViewMatrixLocation2 = gl.getUniformLocation(shaderProgram2, 'u_modelV
 const projectionMatrixLocation2 = gl.getUniformLocation(shaderProgram2, 'u_projectionMatrix');
 
 
+
+
+
+
+
+// Example usage:
+const tileSize = 5.0;
+const tileHeight = 0.3;
+const { vertices: tileVertices, indices: tileIndices } = generateTileVertices(tileSize,tileHeight);
+
+
+
+
+// Step 10: Buffer Setup for Tiles
+const tileVertexBuffer = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, tileVertexBuffer);
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(tileVertices), gl.STATIC_DRAW);
+
+const tileIndexBuffer = gl.createBuffer();
+gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, tileIndexBuffer);
+gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(tileIndices), gl.STATIC_DRAW);
+
+// Step 11: Shader Compilation and Linking for Tiles
+const vertexShaderTile = compileShader(gl, vertexShaderSourceTile, gl.VERTEX_SHADER);
+const fragmentShaderTile = compileShader(gl, fragmentShaderSourceTile, gl.FRAGMENT_SHADER);
+
+const shaderProgramTile = linkProgram(gl, vertexShaderTile, fragmentShaderTile);
+gl.useProgram(shaderProgramTile);
+
+// Step 12: Attribute and Uniform Locations for Tiles
+const positionAttribLocationTile = gl.getAttribLocation(shaderProgramTile, 'a_position');
+gl.vertexAttribPointer(positionAttribLocationTile, 3, gl.FLOAT, false, 0, 0);
+gl.enableVertexAttribArray(positionAttribLocationTile);
+
+const modelViewMatrixLocationTile = gl.getUniformLocation(shaderProgramTile, 'u_modelViewMatrix');
+const projectionMatrixLocationTile = gl.getUniformLocation(shaderProgramTile, 'u_projectionMatrix');
+
+
+
+
+
+
+
+
+
+
 // Step 7: Matrix and Projection Setup
 let modelViewMatrix = mat4.create();
 let projectionMatrix = mat4.create();
@@ -103,21 +149,54 @@ const far = 100.0;
 
 mat4.perspective(projectionMatrix, fieldOfView, aspect, near, far);
 
-let cameraPosition = vec3.fromValues(0.0, 0.0, 5.0); // Initial camera position
+let cameraPosition = vec3.fromValues(0.0, 2.0, 5.0); // Initial camera position
 
 
+
+let eulerX = 0.0;  // Euler angle for rotation around the X-axis
+let eulerY = 8.0;  // Euler angle for rotation around the Y-axis
+let eulerZ = 0.0;  // Euler angle for rotation around the Z-axis
+
+
+
+function renderTiles(tileCount) {
+  for (let i = 0; i < tileCount; i++) {
+    // Update model-view matrix for translation of Tiles
+    mat4.lookAt(modelViewMatrix, cameraPosition, [cameraPosition[0], cameraPosition[1], cameraPosition[2] - 1], [0.0, 1.0, 0.0]);
+    mat4.translate(modelViewMatrix, modelViewMatrix, [ 0.0, -1.0, i*(-8.0) -5.0]); // Adjust the position
+    
+    // Use shader program and bind vertex buffer for Tiles
+    gl.useProgram(shaderProgramTile);
+    gl.bindBuffer(gl.ARRAY_BUFFER, tileVertexBuffer);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, tileIndexBuffer);
+
+    // Enable attributes and set attribute pointers for Tiles
+    gl.enableVertexAttribArray(positionAttribLocationTile);
+    gl.vertexAttribPointer(positionAttribLocationTile, 3, gl.FLOAT, false, 0, 0);
+
+    // Set uniforms for transformation matrices for Tiles
+    gl.uniformMatrix4fv(modelViewMatrixLocationTile, false, modelViewMatrix);
+    gl.uniformMatrix4fv(projectionMatrixLocationTile, false, projectionMatrix);
+
+    // Draw Tiles
+    gl.drawElements(gl.TRIANGLES, tileIndices.length, gl.UNSIGNED_SHORT, 0);
+  }
+}
 
 
 // Step 8: Rendering Loop
 function render() {
   // Animation (Optional): Update transformation matrices
   handleKeys();
+  // Apply Euler angles for camera rotation
+
 
   // Update model-view matrix for translation of Sphere 1
   mat4.lookAt(modelViewMatrix, cameraPosition, [cameraPosition[0], cameraPosition[1], cameraPosition[2] - 1], [0.0, 1.0, 0.0]);
-
+  
   // mat4.identity(modelViewMatrix);
   mat4.translate(modelViewMatrix, modelViewMatrix, [mainPositionX, mainPositionY, mainPositionZ]);
+  
 
   // Set clear color and clear the canvas
   gl.enable(gl.DEPTH_TEST);
@@ -161,6 +240,11 @@ function render() {
 
   // Draw Sphere 2
   gl.drawElements(gl.TRIANGLES, indices2.length, gl.UNSIGNED_SHORT, 0);
+
+
+
+   // Render multiple tiles
+   renderTiles(20); // Adjust the number of tiles as needed
 
   // Request the next frame
   requestAnimationFrame(render);
