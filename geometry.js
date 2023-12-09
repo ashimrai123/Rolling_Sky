@@ -32,3 +32,51 @@ function generateSphereVertices(radius, latitudeBands, longitudeBands) {
   
     return { vertices, indices };
   }
+
+  function generateTileVertices(size, height) {
+    const halfSize = size / 2;
+    const vertices = [
+        // Top face
+        -halfSize, height, -halfSize,
+        halfSize, height, -halfSize,
+        halfSize, height, halfSize,
+        -halfSize, height, halfSize,
+        // Bottom face
+        -halfSize, 0, -halfSize,
+        halfSize, 0, -halfSize,
+        halfSize, 0, halfSize,
+        -halfSize, 0, halfSize,
+        // Front face
+        -halfSize, 0, halfSize,
+        halfSize, 0, halfSize,
+        halfSize, height, halfSize,
+        -halfSize, height, halfSize,
+        // Back face
+        -halfSize, 0, -halfSize,
+        halfSize, 0, -halfSize,
+        halfSize, height, -halfSize,
+        -halfSize, height, -halfSize,
+        // Left face
+        -halfSize, 0, -halfSize,
+        -halfSize, 0, halfSize,
+        -halfSize, height, halfSize,
+        -halfSize, height, -halfSize,
+        // Right face
+        halfSize, 0, -halfSize,
+        halfSize, 0, halfSize,
+        halfSize, height, halfSize,
+        halfSize, height, -halfSize
+    ];
+
+    const indices = [
+        0, 1, 2, 0, 2, 3,  // Top face
+        4, 5, 6, 4, 6, 7,  // Bottom face
+        8, 9, 10, 8, 10, 11,  // Front face
+        12, 13, 14, 12, 14, 15,  // Back face
+        16, 17, 18, 16, 18, 19,  // Left face
+        20, 21, 22, 20, 22, 23  // Right face
+    ];
+
+    return { vertices, indices };
+}
+
