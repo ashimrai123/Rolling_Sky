@@ -10,6 +10,8 @@ let keys = {}; // Object to track which keys are currently pressed
   });
 
   window.addEventListener('keyup', (e) => {
+    e.preventDefault();
+
     keys[e.key] = false;
   });
 
@@ -17,7 +19,7 @@ let keys = {}; // Object to track which keys are currently pressed
 
 
   function handleKeys() {
-    const speed = 0.1; // Adjust the speed as needed
+    const speed = 0.15; // Adjust the speed as needed
 
 
     // if (keys['w']|| keys['KeyW']) {
