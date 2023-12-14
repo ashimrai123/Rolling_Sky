@@ -67,8 +67,6 @@ const projectionMatrixLocation1 = gl.getUniformLocation(
   "u_projectionMatrix"
 );
 
-
-
 /* ------------------------------------------ TILE SETUP --------------------------------------------------------------------*/
 
 const tileSize = 4.0;
@@ -427,7 +425,6 @@ const projectionMatrixLocationBox = gl.getUniformLocation(
   "u_projectionMatrix"
 );
 
-
 /* ------------------------------------------ MOVING BOX OBSTACLE SETUP --------------------------------------------------------------------*/
 
 const mboxSize = 4.0;
@@ -482,15 +479,11 @@ const projectionMatrixLocationMbox = gl.getUniformLocation(
   "u_projectionMatrix"
 );
 
-
-
 /* --------------------------------------------- RENDER MOVING BOX OBSTACLES --------------------------------------------------------------------*/
 
 let movingTilePositionBox = 0;
 
 function renderMboxes() {
-
-
   for (let row = 0; row < data.length; row++) {
     for (let col = 0; col < data[row].length; col++) {
       const boxType = data[row][col];
@@ -508,7 +501,7 @@ function renderMboxes() {
         movingTilePositionBox = Math.sin(getElapsedTime() * 0.0023) * 3;
 
         let translationBoxX = col * tileSize - 2 * tileSize;
-        let translationBoxY = movingTilePositionBox  ;
+        let translationBoxY = movingTilePositionBox;
         let translationBoxZ = row * -4.0 - 5;
 
         // Apply translation based on row, column, and tile height
@@ -517,7 +510,6 @@ function renderMboxes() {
           translationBoxY,
           translationBoxZ,
         ]);
-
 
         // Use shader program and bind vertex buffer for Boxes
         gl.useProgram(shaderProgramMbox);
@@ -536,7 +528,11 @@ function renderMboxes() {
         );
 
         // Set uniforms for transformation matrices for Boxes
-        gl.uniformMatrix4fv(modelViewMatrixLocationMbox, false, modelViewMatrix);
+        gl.uniformMatrix4fv(
+          modelViewMatrixLocationMbox,
+          false,
+          modelViewMatrix
+        );
         gl.uniformMatrix4fv(
           projectionMatrixLocationMbox,
           false,
@@ -546,7 +542,7 @@ function renderMboxes() {
         // Draw Boxes
         gl.drawElements(gl.TRIANGLES, mboxIndices.length, gl.UNSIGNED_SHORT, 0);
       }
-        // Only render a box if the data value is 7
+      // Only render a box if the data value is 7
       if (boxType === 7) {
         // Update model-view matrix for translation of Boxes
         mat4.lookAt(
@@ -558,7 +554,8 @@ function renderMboxes() {
 
         movingTilePositionBox = Math.sin(getElapsedTime() * 0.0023) * 5;
 
-        let translationBoxX = movingTilePositionBox + col * tileSize - 2 * tileSize;
+        let translationBoxX =
+          movingTilePositionBox + col * tileSize - 2 * tileSize;
         let translationBoxY = -1.0;
         let translationBoxZ = row * -4.0 - 5;
 
@@ -586,7 +583,11 @@ function renderMboxes() {
         );
 
         // Set uniforms for transformation matrices for Boxes
-        gl.uniformMatrix4fv(modelViewMatrixLocationMbox, false, modelViewMatrix);
+        gl.uniformMatrix4fv(
+          modelViewMatrixLocationMbox,
+          false,
+          modelViewMatrix
+        );
         gl.uniformMatrix4fv(
           projectionMatrixLocationMbox,
           false,
@@ -600,12 +601,9 @@ function renderMboxes() {
   }
 }
 
-
 /* --------------------------------------------- RENDER BOX OBSTACLES --------------------------------------------------------------------*/
 
 function renderBoxes() {
-
-
   for (let row = 0; row < data.length; row++) {
     for (let col = 0; col < data[row].length; col++) {
       const boxType = data[row][col];
@@ -722,10 +720,9 @@ function renderTiles() {
 let movingTilePosition = 0;
 let startTime = Date.now();
 
-function getElapsedTime(){
-    return Date.now()- totalPausedTime;
+function getElapsedTime() {
+  return Date.now() - totalPausedTime;
 }
-
 
 function renderMovingTiles() {
   for (let row = 0; row < data.length; row++) {
@@ -998,7 +995,7 @@ let projectionMatrix = mat4.create();
 let tilePositionX = 0.0; // New variable to store sphere position along the x-axis
 let mainPositionX = 0.0; // New variable to store main position along the x-axis
 let mainPositionY = 0.4; // New variable to store main position along the y-axis
-let mainPositionZ = -11.0; // New variable to store main position along the z-axis
+let mainPositionZ = -9.0; // New variable to store main position along the z-axis
 
 const fieldOfView = Math.PI / 4; // 45 degrees
 const aspect = canvas.width / canvas.height;
@@ -1011,7 +1008,7 @@ mat4.perspective(projectionMatrix, fieldOfView, aspect, near, far);
 let cameraPosition = vec3.fromValues(0.0, 2.0, 5.0); // Initial camera position
 
 cameraPosition[0] = 0; // X-coordinate of the camera
-cameraPosition[1] = 4; // Y-coordinate of the camera (height)
+cameraPosition[1] = 5; // Y-coordinate of the camera (height)
 cameraPosition[2] = 5; // Z-coordinate of the camera
 
 // const lookAtPoint = [0, 0, 1]; // Point the camera is looking at
@@ -1038,7 +1035,7 @@ mat4.lookAt(
 
 let pauseGame = false;
 
-let accelerationY= 0.0;
+let accelerationY = 0.0;
 
 // function gravityY(){
 //   // accelerationY += gravity; // Update acceleration based on gravity
@@ -1051,86 +1048,116 @@ let accelerationY= 0.0;
 // let jumpFlag = false;
 const maxHeight = 7;
 
+// Define initial and final camera positions
+const initialCameraPosition = [-30, 4, 0];
+const finalCameraPosition = [-8, 4, 0];
+
+// Define the duration of the intro in milliseconds
+const introDuration = 9000; // 10 seconds
+
+// Get the start time of the intro
+const introStartTime = Date.now();
+
+let introStart = true;
+
+function introHandle() {
+  if (Date.now() - introStartTime > introDuration) {
+    introStart = false;
+    cameraPosition[2] = 5;
+    cameraPosition[1] = 5;
+  }
+  if(cameraPosition[2] > 5){
+    cameraPosition[2] -= 2;
+    cameraPosition[1] -= 0.0131;
+  }
+    cameraPosition[2] += 2.35;
+    cameraPosition[1] += 0.003;
+    mainPositionZ = -9.0;
+}
+
+cameraPosition[2] = -800;
 
 // Rendering Loop
 function render() {
   handlePause();
 
+  if (introStart) {
 
-  if(!pauseGame){
+    introHandle();
+
+  }
+
+
+  if (!pauseGame) {
     handleKeys();
 
     mainPositionY += gravity;
- 
 
-  mainPositionZ += -0.32;
-  cameraPosition[2] += -0.32;
+    mainPositionZ += -0.34;
+    cameraPosition[2] += -0.34;
 
-  if (mainPositionY < -0.1) {
-    tryAgain();
+    if (mainPositionY < -0.1) {
+      tryAgain();
+    }
+    // Update model-view matrix for translation of Sphere 1
+    mat4.lookAt(
+      modelViewMatrix,
+      cameraPosition,
+      [cameraPosition[0], cameraPosition[1], cameraPosition[2] - 5],
+      [0.0, 1.0, 1.0]
+    );
+
+    // mat4.identity(modelViewMatrix);
+    mat4.translate(modelViewMatrix, modelViewMatrix, [
+      mainPositionX,
+      mainPositionY,
+      mainPositionZ,
+    ]);
+
+    // Set clear color and clear the canvas
+    gl.enable(gl.DEPTH_TEST);
+
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    // Use shader program and bind vertex buffer for Sphere 1
+    gl.useProgram(shaderProgram1);
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer1);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer1);
+
+    // Enable attributes and set attribute pointers for Sphere 1
+    gl.enableVertexAttribArray(positionAttribLocation1);
+    gl.vertexAttribPointer(positionAttribLocation1, 3, gl.FLOAT, false, 0, 0);
+
+    // Set uniforms for transformation matrices for Sphere 1
+    gl.uniformMatrix4fv(modelViewMatrixLocation1, false, modelViewMatrix);
+    gl.uniformMatrix4fv(projectionMatrixLocation1, false, projectionMatrix);
+
+    // Draw Sphere 1
+    gl.drawElements(gl.TRIANGLES, indices1.length, gl.UNSIGNED_SHORT, 0);
+
+    // Render tiles
+    renderTiles();
+
+    // Render Box obstacles
+    renderBoxes();
+
+    renderMboxes();
+
+    renderJumpTiles();
+
+    renderMovingTiles();
+
+    renderJmovingTiles();
+
+    renderEndTiles();
+
+    //HANDLE COLLISION
+    handleCollisions();
   }
-  // Update model-view matrix for translation of Sphere 1
-  mat4.lookAt(
-    modelViewMatrix,
-    cameraPosition,
-    [cameraPosition[0], cameraPosition[1], cameraPosition[2] - 5],
-    [0.0, 1.0, 1.0]
-  );
 
-  // mat4.identity(modelViewMatrix);
-  mat4.translate(modelViewMatrix, modelViewMatrix, [
-    mainPositionX,
-    mainPositionY,
-    mainPositionZ,
-  ]);
-
-  // Set clear color and clear the canvas
-  gl.enable(gl.DEPTH_TEST);
-
-  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-  // Use shader program and bind vertex buffer for Sphere 1
-  gl.useProgram(shaderProgram1);
-  gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer1);
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer1);
-
-  // Enable attributes and set attribute pointers for Sphere 1
-  gl.enableVertexAttribArray(positionAttribLocation1);
-  gl.vertexAttribPointer(positionAttribLocation1, 3, gl.FLOAT, false, 0, 0);
-
-  // Set uniforms for transformation matrices for Sphere 1
-  gl.uniformMatrix4fv(modelViewMatrixLocation1, false, modelViewMatrix);
-  gl.uniformMatrix4fv(projectionMatrixLocation1, false, projectionMatrix);
-
-  // Draw Sphere 1
-  gl.drawElements(gl.TRIANGLES, indices1.length, gl.UNSIGNED_SHORT, 0);
-
-  // Render tiles
-  renderTiles();
-
-  // Render Box obstacles
-  renderBoxes();
-
-  renderMboxes();
-
-  renderJumpTiles();
-
-  renderMovingTiles();
-
-  renderJmovingTiles();
-
-  renderEndTiles();
-
-  //HANDLE COLLISION
-  handleCollisions();
-
-}
-
-
-// playAudio();
+  // playAudio();
 
   // Request the next frame
   requestAnimationFrame(render);
-
 }
 
 /* --------------------------------------------- START RENDER --------------------------------------------------------------------*/
