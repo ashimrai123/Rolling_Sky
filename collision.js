@@ -1,5 +1,5 @@
-// let jumpFlag = false;
-const maxHeight = 7;
+
+
 let jumpFlag = true;
 function checkCollision(
   tileX,
@@ -16,7 +16,7 @@ function checkCollision(
   const distance = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
 
   // Check if the distance is less than the sum of the radii for collision
-  return distance < tileSize / 2 + sphereRadius;
+  return distance < tileSize / 2 + sphereRadius ;
 }
 
 function handleCollisions() {
@@ -31,6 +31,8 @@ function handleCollisions() {
         tileType == 3 ||
         tileType == 4 ||
         tileType == 5 ||
+        tileType == 6 ||
+        tileType == 7 ||
         tileType == 99
       ) {
         const tileX = col * tileSize - 2 * tileSize;
@@ -47,43 +49,133 @@ function handleCollisions() {
             sphere1Radius
           )
         ) {
-          switch (tileType) {
-            case 1: //Normal Tile
-            case 4: //
-              if (
-                mainPositionY >= tileHeight - 1 &&
-                mainPositionY <= tileHeight + 1
-              ) {
-                mainPositionY = tileHeight;
-              }
-            
-            case 2:
-            case 5:
-              if (
-                mainPositionY >= tileHeight - 1 &&
-                mainPositionY <= tileHeight + 1
-              ) {
-                jumpFlag = true;
-              }
-              if (mainPositionY >= maxHeight) {
-                jumpFlag = false;
-              }
-              if (jumpFlag) {
-                mainPositionY += jumpVelocity;
-              }
-              break;
-            case 3:
-              if (mainPositionY <= boxHeight) {
-                tryAgain();
-              }
-              break;
+          handleCollisionForTile(tileType);
+        }
 
-            case 99:
-              endGame();
-              break;
+        if ( tileType == 7) {
+          // Check collision for moving box obstacle in X-axis
+          const boxX = movingTilePositionBox + col * tileSize - 2 * tileSize;
+          const boxZ = row * -4.0 - 5;
+
+          if (
+            checkCollision(
+              boxX,
+              boxZ,
+              mboxSize, 
+              mainPositionX,
+              mainPositionY,
+              mainPositionZ,
+              sphere1Radius
+            )
+          ) {
+            tryAgain();
+          }
+      }
+
+      // Check collision for moving Normal tiles in X-axis
+      if (tileType == 4) {
+        const tileX = movingTilePosition + col * tileSize - 2 * tileSize;
+        const tileZ = row * -4.0 - 5;
+
+        if (
+          checkCollision(
+            tileX,
+            tileZ,
+            movTileSize,
+            mainPositionX,
+            mainPositionY,
+            mainPositionZ,
+            sphere1Radius
+          )
+        ) {
+          if (
+            mainPositionY >=  -1.5 // tile's y-coordinate is -1, 0.5 is added in case of gravity applied 
+             && mainPositionY <= 0.9 // letting sphere float above 0.9 
+          ) {
+            mainPositionY = 0.9 ; // sphere's radius is 0.9
           }
         }
       }
+
+      // Check collision for moving JUmp tiles
+      if (tileType == 5) {        
+        const jTileX =
+          jmovingTilePosition + col * tileSize - 2 * tileSize;
+        const jTileZ = row * -4.0 - 5;
+
+        if (
+          checkCollision(
+            jTileX,
+            jTileZ,
+            jmovTileSize,
+            mainPositionX,
+            mainPositionY,
+            mainPositionZ,
+            sphere1Radius
+          )
+        ) {
+          if (
+            mainPositionY >=  -1.5 // tile's y-coordinate is -1, 0.5 is added in case of gravity applied 
+            && mainPositionY <= 0.9 // letting sphere float above 0.9 
+          ) {
+            jumpFlag = true; // allowed to jump 
+          }
+          if (mainPositionY >= maxHeight) {
+            jumpFlag = false; //not allowed to jump after reaching maximum height and only allowed to fall due to gravity;
+          }
+          if(jumpFlag){
+            mainPositionY += jumpVelocity; // increase in height gradually with each collision detected in tile
+          }        }
+      }
     }
   }
-}
+
+    }
+    }
+ 
+
+
+  function handleCollisionForTile(tileType){
+    switch(tileType){
+      case 1: //Normal Tile
+        if (
+          mainPositionY >=  -1.5 // tile's y-coordinate is -1, 0.5 is added in case of gravity applied 
+           && mainPositionY <= 0.9 // letting sphere float above 0.9 
+        ) {
+          mainPositionY = 0.9 ; // sphere's radius is 0.9
+        }
+        
+        break;
+
+      case 2: // Jump Tile
+        if (
+          mainPositionY >=  -1.5 // tile's y-coordinate is -1, 0.5 is added in case of gravity applied 
+          && mainPositionY <= 0.9 // letting sphere float above 0.9 
+        ) {
+          jumpFlag = true; // allowed to jump 
+        }
+        if (mainPositionY >= maxHeight) {
+          jumpFlag = false; //not allowed to jump after reaching maximum height and only allowed to fall due to gravity;
+        }
+        if(jumpFlag){
+          mainPositionY += jumpVelocity; // increase in height gradually with each collision detected in tile
+        }
+        break;
+
+      case 3: //Box Obstacle
+      case 6: // Moving Box Obstacle Y-axis
+        if (mainPositionY <= boxHeight ) {
+          tryAgain(); // Restart the game 
+        }
+        break;
+
+      case 99:
+        endGame(); //End of the game
+        break;
+    }
+      
+    }
+  
+
+
+

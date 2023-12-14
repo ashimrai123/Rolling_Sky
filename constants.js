@@ -1,8 +1,7 @@
 
 
-//JUMP 
-let jumpVelocity = 0.6;
-let gravity = -0.18 ;
+// FOR JUMPING 
 
-
+let jumpVelocity = 0.7; //rate at which the Y position of sphere is increased
+let gravity = -0.25; // rate at which the Y position of sphere is decreased 
 

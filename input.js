@@ -22,6 +22,7 @@ let keys = {}; // Object to track which keys are currently pressed
     const speed = 0.15; // Adjust the speed as needed
 
 
+
     // if (keys['w']|| keys['KeyW']) {
     //   mainPositionY += speed;
     // }
@@ -76,4 +77,31 @@ let keys = {}; // Object to track which keys are currently pressed
       // Move camera along the negative Y-axis
       cameraPosition[1] -= speed;
     }
+  }
+
+
+
+//PAUSE LOGIC 
+
+
+let lastKeyPressTime = 0;
+const debounceInterval = 120; 
+let pausedTime =0;
+let totalPausedTime =0;
+
+  function handlePause(){
+    const currentTime = Date.now();
+    if(keys[' '] && currentTime - lastKeyPressTime >debounceInterval){
+      pauseGame = !pauseGame;
+      lastKeyPressTime = currentTime; 
+      if (pauseGame) {
+        // If the game is paused, record the start time of the pause
+        pauseStartTime = currentTime;
+      } else {
+        // If the game is unpaused, calculate the pause duration and add it to totalPausedTime
+        const pauseDuration = currentTime - pauseStartTime;
+        totalPausedTime += pauseDuration;
+      }
+    }
+    
   }

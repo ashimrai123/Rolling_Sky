@@ -5,6 +5,9 @@
   3 = O.B = Box Obstacle 
   4 = O.MT = Moving Tile 
   5 = O.MJT = Moving Jump Tile 
+  6 = O.MBY = Moving Box Obstacle In Y-axis
+  7 = O.MBX = Moving Box Obstacle In X-axis
+
   99 = O.ET = End Tile
   To Make : CheckPoint Tile */
 
@@ -15,68 +18,299 @@ const O = {
   B: 3,
   MT: 4,
   MJT: 5,
+  MBY: 6,
+  MBX: 7,
   ET: 99,
 };
 
 const data = [
+  //ALL NORMAL TILES 
   [O.T, O.T, O.T, O.T, O.T], //our start
   [O.T, O.T, O.T, O.T, O.T],
   [O.T, O.T, O.T, O.T, O.T],
   [O.T, O.T, O.T, O.T, O.T],
   [O.T, O.T, O.T, O.T, O.T],
-  //jump test
-//   [O.T, O.T, O.T, O.T, O.T],
-//   [O.JT, O.JT, O.JT, O.JT, O.JT],
-//   [O.JT, O.JT, O.JT, O.JT, O.JT],
-//   [O.JT, O.JT, O.JT, O.JT, O.JT],
-//   [O.JT, O.JT, O.JT, O.JT, O.JT],
-//   [O.JT, O.JT, O.JT, O.JT, O.JT],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
 
-  //  first
+
+  // //jump test, FOR TESTING 
+  // [O.T, O.T, O.T, O.T, O.T],
+  // [O.JT, O.JT, O.JT, O.JT, O.JT],
+  // [O.JT, O.JT, O.JT, O.JT, O.JT],
+  // [O.JT, O.JT, O.JT, O.JT, O.JT],
+  // [O.JT, O.JT, O.JT, O.JT, O.JT],
+  // [O.JT, O.JT, O.JT, O.JT, O.JT],
+
+  // [O.MBX, 0, 0, 0, O.MBX],
+  // [O.MBX, 0, 0, 0, O.MBX],
+  // [O.MBX, 0, O.JT, 0, O.MBX],
+  // [O.MBX, 0, 0, 0, O.MBX],
+  // [O.MBX, 0, 0, 0, O.MBX],
+
+
+  // [ O.MBX, 0, O.JT,O.T,0],
+  // [ O.MBX, 0, O.JT,O.T,0],
+  // [ O.MBX, 0, O.JT,O.T,0],
+  // [ O.MBX, 0, O.JT,O.T,0],
+  // [ O.MBX, 0, O.JT,O.JT,0],
+
+    // [0, 0, 0, 0, 0],
+  // [0, 0, 0, 0, 0],
+
+  /* ---------------------------------------- OBSTACLES START HERE ----------------------------------------------------------------*/
+  /* ---------------------------------------- NEED TO ADD CHECKPOINTS ----------------------------------------------------------------*/
+
+// 2 sides Moving Box - X-axis
+  [O.MBX, O.T, 0, O.T, O.MBX],
+  [O.MBX, O.T, 0, O.T, O.MBX],
+  [O.MBX, O.T, O.T, O.T, O.MBX],
+  [O.MBX, O.T, O.T, O.T, O.MBX],
+
+//Walking  
+  [0, O.T, O.T, O.T, 0],
+  [0, O.T, O.T, O.T, 0],
+  [0, O.T, O.T, O.T, 0],
+  [0, O.T, O.T, O.T, 0],
+  
+  // Simple Moving Box - Y-axis
+  [ 0, O.JT, 0, O.JT, 0 ],
+  [ 0, O.MBY, 0, O.MBY, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, O.T, 0, 0],
+  [0, 0, O.T, 0, 0],
+  [0, 0, O.T, 0, 0],
+  [0, 0, O.T, 0, 0],
+  [0, 0, O.T, 0, 0],
+  [0, 0, O.JT, 0, 0],
+  [0, 0, O.MBY, 0, 0],
+  [0, 0, O.T, 0, 0],
+  [0, 0, O.T, 0, 0],
+  [0, 0, O.T, 0, 0],
+  [0, 0, O.T, 0, 0],
+  [0, 0, O.JT, 0, 0],
+
+  [0, 0, O.MBY, 0, 0], 
+  [0, 0, 0, 0, 0], 
+
+// Walking 
+  [0, 0, O.T, 0, 0],
+  [0, 0, O.T, 0, 0],
+  [0, 0, O.T, 0, 0],
+  [0, 0, O.T, 0, 0],
+  [0, 0, O.T, 0, 0],
+  [0, 0, O.T, 0, 0],
+  [0, 0, O.T, 0, 0],
+
+
+//straight simple walking path
+  [0, O.MBY, O.T, O.MBY, 0],
+  [0, O.MBY, O.T, O.MBY, 0],
+  [0, O.MBY, O.T, O.MBY, 0],
+  [0, O.MBY, O.T, O.MBY, 0],
+  [0, O.MBY, O.T, O.MBY, 0],
+
+  //Walking 
+  [0, O.T, O.T, O.T, 0],
+  [0, O.T, O.T, O.T, 0],
+  [0, O.T, O.T, O.T, 0],
+
+
+// MOVING NORMAL TILE 
   [0, 0, O.MT, 0, 0],
+
+  //Walking 
   [0, O.T, O.T, O.T, 0],
   [0, O.T, O.T, O.T, 0],
   [0, O.T, O.T, O.T, 0],
   [0, O.T, O.T, O.T, 0],
-  //second
+
+
+  // MOVING JUMPING TILE 
   [0, 0, O.MJT, 0, 0],
+
+  //Walking
   [0, O.T, O.T, O.T, 0],
   [0, O.T, O.T, O.T, 0],
   [0, O.T, O.T, O.T, 0],
   [0, O.T, O.T, O.T, 0],
-  //third
+
+
+  //SIMPLE OBSTACLE
   [0, O.B, O.T, O.B, 0],
   [0, O.B, O.T, O.B, 0],
   [0, 0, O.T, 0, 0],
+
+  //Walking
   [O.T, O.T, O.T, O.T, O.T],
   [O.T, O.T, O.T, O.T, O.T],
   [O.T, O.T, O.T, O.T, O.T],
   [O.T, O.T, O.T, O.T, O.T],
   [O.T, O.T, O.T, O.T, O.T],
-  //fourth
+
+  //JUMP TRAP
   [0, O.T, O.JT, O.T, 0],
   [0, O.T, O.B, O.T, 0],
   [0, O.T, 0, O.T, 0],
   [0, O.JT, 0, O.JT, 0],
   [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+
+
+
+//Right Sided 
+[O.T, 0, 0, 0, O.T],
+[O.T, 0, 0, 0, O.T],
+[O.T, 0, 0, 0, O.T],
+
+[O.T, O.T, 0, O.T, O.T],
+[O.T, O.T, 0, O.T, O.T],
+[O.T, O.T, 0, O.T, O.T],
+
+[O.T, O.T, O.T, O.T, O.T],
+[O.T, O.T, O.T, O.T, O.T],
+[O.T, O.T, O.T, O.T, O.T],
+
+
+
+
+
+
+
+  //Walking 
   [0, O.T, O.T, O.T, 0],
+  [0, 0, O.T, 0, 0],
+  [0, 0, O.T, 0, 0],
+  [0, 0, O.T, 0, 0],
+
+
+
+
+
+  //Blocks - center open
+  [O.B, O.B, O.T, O.B, O.B],
   [O.T, O.T, O.T, O.T, O.T],
   [O.T, O.T, O.T, O.T, O.T],
   [O.T, O.T, O.T, O.T, O.T],
   [O.T, O.T, O.T, O.T, O.T],
-  //fifth, implemented problem as a long jump feature, BRIDGE JUMP
+
+  //Blocks - 2 sides open
+  [O.B, O.T, O.B, O.T, O.B],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
+
+
+  //Blocks - center open
+  [O.B, O.B, O.T, O.B, O.B],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
+   
+
+
+  //Blocks - Right side open
+  [O.B, O.B, O.B, O.T, O.B],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
+
+  
+  //Blocks - Left side open
   [O.B, O.T, O.B, O.B, O.B],
   [O.T, O.T, O.T, O.T, O.T],
   [O.T, O.T, O.T, O.T, O.T],
   [O.T, O.T, O.T, O.T, O.T],
   [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
 
-  [O.T, O.B, O.JT, O.B, 0],
+    //Blocks - center open
+    [O.B, O.B, O.T, O.B, O.B],
+    [O.T, O.T, O.T, O.T, O.T],
+    [O.T, O.T, O.T, O.T, O.T],
+    [O.T, O.T, O.T, O.T, O.T],
+    [O.T, O.T, O.T, O.T, O.T],
+
+
+
+// BRIDGE 
+  [O.T, O.B, O.T, O.B, 0],
+  
+  //FOR NORMAL TILES CURVE
+  [0, 0, O.T, 0, 0],
+  [0, 0, O.T, 0, 0],
+  [0, 0, O.T, 0, 0],
+
+  [0, 0, O.T, O.T, 0],
+  [0, 0, O.T, O.T, 0],
+  [0, 0, 0, O.T, 0],
+  [0, 0, 0, O.T, 0],
+  [0, 0, 0, O.T, 0],
+
+  [0, 0, O.T, O.T, 0],
+  [0, 0, O.T, O.T, 0],
+  [0, 0, O.T, 0, 0],
+  [0, 0, O.T, 0, 0],
+  [0, 0, O.T, 0, 0],
+
+
+  [0, O.T, O.T, 0, 0],
+  [0, O.T, O.T, 0, 0],
+  [0, O.T, 0, 0, 0],
+
+  [0, O.T, 0, 0, 0],
+  [0, O.T, 0, 0, 0],
+
+  [0, O.T, O.T, 0, 0],
+  [0, O.T, O.T, 0, 0],
+
+  //FOR JUMP TILES CURVE JUMPS 
+  [0, 0, O.T, 0, 0],
   [0, 0, O.JT, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, O.JT, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, O.JT, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, O.JT, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, O.JT, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, O.JT, 0, 0],
+  [0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0],
 
 
-  [0, 0, O.MJT, 0, 0],
+
+
+  [0, 0, O.T, 0, 0],
+  [0, 0, O.T, 0, 0],
+
+  [0, O.T, O.T, O.T, 0],
+  [0, O.T, O.T, O.T, 0],
+  [0, O.T, O.T, O.T, 0],
+
+
+
+
+  [0, 0, O.JT, 0, 0],
   [0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0],
 
@@ -106,45 +340,11 @@ const data = [
   [0, O.JT, 0, O.JT, 0],
   [0, O.B, 0, O.B, 0],
   [0, 0, 0, 0, 0],
-  [0, O.T, 0, O.T, 0],
-  [0, O.T, O.T, O.T, 0],
-  [0, O.T, O.T, O.T, 0],
-  [0, O.T, O.T, O.T, 0],
-  [0, O.T, O.T, O.T, 0],
-  [0, O.B, O.T, O.T, 0],
-  [0, O.B, O.T, O.T, 0],
-  [0, O.B, O.T, O.T, 0],
-  [0, O.B, O.T, O.T, 0],
-  [0, O.B, O.T, O.T, 0],
-  [0, O.B, O.T, O.T, 0],
-  [0, O.B, O.T, O.T, 0],
-  [0, O.B, O.T, O.T, 0],
-  [0, O.B, O.T, O.T, 0],
-  [0, O.T, O.T, O.T, 0],
-  [0, O.T, O.T, O.T, 0],
-  [0, O.T, O.T, O.T, 0],
-  [0, O.T, 0, O.T, 0],
-  [0, O.T, 0, O.T, 0],
-  [0, O.T, 0, O.T, 0],
-  [0, O.T, 0, O.T, 0],
-  [0, O.T, 0, O.T, 0],
-  [0, O.T, 0, O.T, 0],
-  [0, O.T, 0, O.T, 0],
-  [0, O.T, 0, O.T, 0],
-  // [0, O.T, 0, O.T, 0],
-  // [O.JT, O.T, O.JT, O.T, O.JT],
-  // [0, O.JT, 0, O.JT, 0],
-  // [0, 0, 0, 0, 0],
-  // [0, O.JT, 0, O.JT, 0],
-  // [0, 0, 0, 0, 0],
-  // [0, 0, 0, 0, 0],
-  // [0, O.JT, 0, O.JT, 0],
-  // [0, 0, 0, 0, 0],
-  // [0, 0, 0, 0, 0],
-  // [0, O.JT, 0, O.JT, 0],
-  // [0, 0, 0, 0, 0],
-  // [0, 0, 0, 0, 0],
-  // [0, O.JT, 0, O.JT, 0],
+
+
+
+
+
   [0, O.T, 0, O.T, 0],
   [0, O.T, 0, O.T, 0],
   [0, O.T, 0, O.T, 0],
@@ -173,3 +373,59 @@ const data = [
   [O.ET, O.ET, O.ET, O.ET, O.ET],
   [O.ET, O.ET, O.ET, O.ET, O.ET],
 ];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // [0, O.T, 0, O.T, 0],
+  // [0, O.T, O.T, O.T, 0],
+  // [0, O.T, O.T, O.T, 0],
+  // [0, O.T, O.T, O.T, 0],
+  // [0, O.T, O.T, O.T, 0],
+  // [0, O.B, O.T, O.T, 0],
+  // [0, O.B, O.T, O.T, 0],
+  // [0, O.B, O.T, O.T, 0],
+  // [0, O.B, O.T, O.T, 0],
+  // [0, O.B, O.T, O.T, 0],
+  // [0, O.B, O.T, O.T, 0],
+  // [0, O.B, O.T, O.T, 0],
+  // [0, O.B, O.T, O.T, 0],
+  // [0, O.B, O.T, O.T, 0],
+  // [0, O.T, O.T, O.T, 0],
+  // [0, O.T, O.T, O.T, 0],
+  // [0, O.T, O.T, O.T, 0],
+  // [0, O.T, 0, O.T, 0],
+  // [0, O.T, 0, O.T, 0],
+  // [0, O.T, 0, O.T, 0],
+  // [0, O.T, 0, O.T, 0],
+  // [0, O.T, 0, O.T, 0],
+  // [0, O.T, 0, O.T, 0],
+  // [0, O.T, 0, O.T, 0],
+  // [0, O.T, 0, O.T, 0],
+  // [0, O.T, 0, O.T, 0],
+  // [O.JT, O.T, O.JT, O.T, O.JT],
+  // [0, O.JT, 0, O.JT, 0],
+  // [0, 0, 0, 0, 0],
+  // [0, O.JT, 0, O.JT, 0],
+  // [0, 0, 0, 0, 0],
+  // [0, 0, 0, 0, 0],
+  // [0, O.JT, 0, O.JT, 0],
+  // [0, 0, 0, 0, 0],
+  // [0, 0, 0, 0, 0],
+  // [0, O.JT, 0, O.JT, 0],
+  // [0, 0, 0, 0, 0],
+  // [0, 0, 0, 0, 0],
+  // [0, O.JT, 0, O.JT, 0],
