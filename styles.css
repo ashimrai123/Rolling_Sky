@@ -15,7 +15,7 @@
   align-items: center;
   width: 100%;
   height: 100%;
-  gap: 20px;
+  gap: 10px;
 }
 
 #menuOverlayPaused {
@@ -63,7 +63,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 90px;
+  font-size: 60px;
   color: red;
   font-weight: bold;
 }
@@ -92,7 +92,7 @@
 }
 
 .goal {
-  font-size: 40px;
+  font-size: 30px;
   color: #2980b9;
 }
 
@@ -120,6 +120,6 @@
 }
 
 .controlsWord {
-  font-size: 35px;
+  font-size: 30px;
   font-weight: bold;
 }
