@@ -16,9 +16,6 @@ gl.clear(gl.COLOR_BUFFER_BIT);
 
 
 
-
-
-
 /* ------------------------------------------ BACKGROUND SETUP --------------------------------------------------------------------*/
 const backgroundVertices = [
   -1500.0, -1500.0, 0.0,
@@ -1755,7 +1752,7 @@ renderTiles();
 function startGame(){
   // Get the audio element
   var audio = document.getElementById("music");
-
+  document.getElementById("myCanvas").style.display = "block";
   // Play the audio
   audio.play();
   document.getElementById("menuOverlayStarting").style.display ="none";
