@@ -73,11 +73,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 40px;
+  font-size: 60px;
   color: red;
   font-weight: bold;
   text-shadow: 1px 1px 1px #000;
-  background-color: rgba(255, 255, 255, 0.4);
   border-radius: 5px;
 }
 
@@ -122,12 +121,12 @@ body {
 }
 
 .resumeButton {
-  height: 100px;
+  height: 80px;
   width: 210px;
 }
 
 .tryAgainButton {
-  height: 100px;
+  height: 80px;
   width: 210px;
 }
 
