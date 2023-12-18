@@ -73,6 +73,8 @@
   color: red;
   font-weight: bold;
   text-shadow: 1px 1px 1px #000;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 5px;
 }
 
 .arrows,
@@ -80,6 +82,9 @@
 .letterP,
 .wasd {
   height: 270px;
+  border-radius: 20px;
+  margin: 8px;
+  background-color: rgba(255, 255, 255, 0.4);
 }
 
 .startButton {
@@ -102,6 +107,8 @@
   font-size: 35px;
   color: blue;
   /* text-shadow: 1px 1px 1px white; */
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 5px;
 }
 
 .playAgainButton {
@@ -130,4 +137,7 @@
 .controlsWord {
   font-size: 30px;
   font-weight: bold;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 5px;
+  padding: 5px 10px;
 }
