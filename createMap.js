@@ -24,7 +24,7 @@ const O = {
 };
 
 const data = [
-  //ALL NORMAL TILES 
+  //ALL NORMAL TILES
   [O.T, O.T, O.T, O.T, O.T], //our start
   [O.T, O.T, O.T, O.T, O.T],
   [O.T, O.T, O.T, O.T, O.T],
@@ -39,25 +39,23 @@ const data = [
   [O.T, O.T, O.T, O.T, O.T],
   [O.T, O.T, O.T, O.T, O.T],
 
+  //   /* ---------------------------------------- OBSTACLES START HERE ----------------------------------------------------------------*/
 
-
-//   /* ---------------------------------------- OBSTACLES START HERE ----------------------------------------------------------------*/
-
-// 2 sides Moving Box - X-axis
+  // 2 sides Moving Box - X-axis
   [O.MBX, O.T, 0, O.T, O.MBX],
   [O.MBX, O.T, 0, O.T, O.MBX],
   [O.MBX, O.T, O.T, O.T, O.MBX],
   [O.MBX, O.T, O.T, O.T, O.MBX],
 
-//Walking  
+  //Walking
   [0, O.T, O.T, O.T, 0],
   [0, O.T, O.T, O.T, 0],
   [0, O.T, O.T, O.T, 0],
   [0, O.T, O.T, O.T, 0],
-  
+
   // Simple Moving Box - Y-axis
-  [ 0, O.T, 0, O.T, 0 ],
-  [ 0, O.MBY, 0, O.MBY, 0],
+  [0, O.T, 0, O.T, 0],
+  [0, O.MBY, 0, O.MBY, 0],
   [0, 0, 0, 0, 0],
   [0, 0, O.T, 0, 0],
   [0, 0, O.T, 0, 0],
@@ -72,10 +70,10 @@ const data = [
   [0, 0, O.T, 0, 0],
   [0, 0, O.T, 0, 0],
 
-  [0, 0, O.MBY, 0, 0], 
-  [0, 0, 0, 0, 0], 
+  [0, 0, O.MBY, 0, 0],
+  [0, 0, 0, 0, 0],
 
-// Walking 
+  // Walking
   [0, 0, O.T, 0, 0],
   [0, 0, O.T, 0, 0],
   [0, 0, O.T, 0, 0],
@@ -84,31 +82,19 @@ const data = [
   [0, 0, O.T, 0, 0],
   [0, 0, O.T, 0, 0],
 
-
-//straight simple walking path
+  //straight simple walking path
   [0, O.MBY, O.T, O.MBY, 0],
   [0, O.MBY, O.T, O.MBY, 0],
   [0, O.MBY, O.T, O.MBY, 0],
   [0, O.MBY, O.T, O.MBY, 0],
   [0, O.MBY, O.T, O.MBY, 0],
 
-  //Walking 
+  //Walking
   [0, O.T, O.T, O.T, 0],
   [0, O.T, O.T, O.T, 0],
   [0, O.T, O.T, O.T, 0],
 
-
-// MOVING NORMAL TILE 
-  [0, 0, O.MT, 0, 0],
-
-  //Walking 
-  [0, O.T, O.T, O.T, 0],
-  [0, O.T, O.T, O.T, 0],
-  [0, O.T, O.T, O.T, 0],
-  [0, O.T, O.T, O.T, 0],
-
-
-  // MOVING JUMPING TILE 
+  // MOVING NORMAL TILE
   [0, 0, O.MT, 0, 0],
 
   //Walking
@@ -117,6 +103,14 @@ const data = [
   [0, O.T, O.T, O.T, 0],
   [0, O.T, O.T, O.T, 0],
 
+  // MOVING JUMPING TILE
+  [0, 0, O.MT, 0, 0],
+
+  //Walking
+  [0, O.T, O.T, O.T, 0],
+  [0, O.T, O.T, O.T, 0],
+  [0, O.T, O.T, O.T, 0],
+  [0, O.T, O.T, O.T, 0],
 
   //SIMPLE OBSTACLE
   [0, O.B, O.T, O.B, 0],
@@ -138,36 +132,24 @@ const data = [
   [0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0],
 
+  //Right Sided
+  [O.T, 0, 0, 0, O.T],
+  [O.T, 0, 0, 0, O.T],
+  [O.T, 0, 0, 0, O.T],
 
+  [O.T, O.T, 0, O.T, O.T],
+  [O.T, O.T, 0, O.T, O.T],
+  [O.T, O.T, 0, O.T, O.T],
 
-//Right Sided 
-[O.T, 0, 0, 0, O.T],
-[O.T, 0, 0, 0, O.T],
-[O.T, 0, 0, 0, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
 
-[O.T, O.T, 0, O.T, O.T],
-[O.T, O.T, 0, O.T, O.T],
-[O.T, O.T, 0, O.T, O.T],
-
-[O.T, O.T, O.T, O.T, O.T],
-[O.T, O.T, O.T, O.T, O.T],
-[O.T, O.T, O.T, O.T, O.T],
-
-
-
-
-
-
-
-  //Walking 
+  //Walking
   [0, O.T, O.T, O.T, 0],
   [0, 0, O.T, 0, 0],
   [0, 0, O.T, 0, 0],
   [0, 0, O.T, 0, 0],
-
-
-
-
 
   //Blocks - center open
   [O.B, O.B, O.T, O.B, O.B],
@@ -183,15 +165,12 @@ const data = [
   [O.T, O.T, O.T, O.T, O.T],
   [O.T, O.T, O.T, O.T, O.T],
 
-
   //Blocks - center open
   [O.B, O.B, O.T, O.B, O.B],
   [O.T, O.T, O.T, O.T, O.T],
   [O.T, O.T, O.T, O.T, O.T],
   [O.T, O.T, O.T, O.T, O.T],
   [O.T, O.T, O.T, O.T, O.T],
-   
-
 
   //Blocks - Right side open
   [O.B, O.B, O.B, O.T, O.B],
@@ -202,12 +181,12 @@ const data = [
   [O.T, O.T, O.T, O.T, O.T],
   [O.T, O.T, O.T, O.T, O.T],
 
-     //Blocks - center open
-     [O.B, O.B, O.T, O.B, O.B],
-     [O.T, O.T, O.T, O.T, O.T],
-     [O.T, O.T, O.T, O.T, O.T],
-     [O.T, O.T, O.T, O.T, O.T],
-     [O.T, O.T, O.T, O.T, O.T],
+  //Blocks - center open
+  [O.B, O.B, O.T, O.B, O.B],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
 
   //Blocks - Left side open
   [O.B, O.T, O.B, O.T, O.B],
@@ -218,18 +197,16 @@ const data = [
   [O.T, O.T, O.T, O.T, O.T],
   [O.T, O.T, O.T, O.T, O.T],
 
-    //Blocks - center open
-    [O.B, O.B, O.T, O.B, O.B],
-    [O.T, O.T, O.T, O.T, O.T],
-    [O.T, O.T, O.T, O.T, O.T],
-    [O.T, O.T, O.T, O.T, O.T],
-    [O.T, O.T, O.T, O.T, O.T],
+  //Blocks - center open
+  [O.B, O.B, O.T, O.B, O.B],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
+  [O.T, O.T, O.T, O.T, O.T],
 
-
-
-// BRIDGE 
+  // BRIDGE
   [O.T, O.B, O.T, O.B, 0],
-  
+
   //FOR NORMAL TILES CURVE
   [0, 0, O.T, 0, 0],
   [0, 0, O.T, 0, 0],
@@ -247,7 +224,6 @@ const data = [
   [0, 0, O.T, 0, 0],
   [0, 0, O.T, 0, 0],
 
-
   [0, O.T, O.T, 0, 0],
   [0, O.T, O.T, 0, 0],
   [0, O.T, 0, 0, 0],
@@ -258,7 +234,7 @@ const data = [
   [0, O.T, O.T, 0, 0],
   [0, O.T, O.T, 0, 0],
 
-  //FOR JUMP TILES CURVE JUMPS 
+  //FOR JUMP TILES CURVE JUMPS
   [0, 0, O.T, 0, 0],
   [0, 0, O.T, 0, 0],
   [0, O.T, O.T, O.T, 0],
@@ -271,7 +247,7 @@ const data = [
   [O.T, O.T, 0, O.T, O.T],
   [O.T, O.T, 0, O.T, O.T],
   [0, 0, O.T, 0, 0],
-  [0,O.T, O.T, O.T, 0],
+  [0, O.T, O.T, O.T, 0],
 
   [0, O.T, O.T, O.T, 0],
   [0, O.T, O.T, O.T, 0],
@@ -287,23 +263,16 @@ const data = [
   [0, O.T, O.T, O.T, 0],
   [0, 0, 0, 0, 0],
 
-
-
-
   [0, 0, O.T, 0, 0],
   [0, 0, O.T, 0, 0],
 
   [0, O.T, O.T, O.T, 0],
   [0, O.T, O.T, O.T, 0],
   [0, O.T, O.T, O.T, 0],
-
-
-
 
   [0, 0, O.JT, 0, 0],
   [0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0],
-
 
   [0, 0, O.T, 0, 0],
   [0, O.B, O.T, O.B, 0],
@@ -331,25 +300,16 @@ const data = [
   [0, O.B, 0, O.B, 0],
   [0, 0, 0, 0, 0],
 
-
-
-
-
   [0, O.T, 0, O.T, 0],
   [0, O.T, 0, O.T, 0],
   [0, O.T, 0, O.T, 0],
   [O.T, O.T, O.T, O.T, O.T],
   [O.T, O.T, O.T, O.T, O.T],
   [O.T, O.T, O.T, O.T, O.T],
-
-
-
-
-
 
   [O.MBX, O.T, O.MBX, O.T, O.MBX],
   [O.T, O.T, O.T, O.T, O.T],
-  [O.T,O.MBY, O.T, O.MBY, O.T],
+  [O.T, O.MBY, O.T, O.MBY, O.T],
   [O.T, O.T, O.T, O.T, O.T],
   [O.T, O.T, O.T, O.T, O.T],
 
@@ -371,7 +331,6 @@ const data = [
   [O.T, O.T, O.T, O.T, O.T],
   [O.T, O.T, O.T, O.T, O.T],
   [O.T, O.T, O.T, O.T, O.T],
-
 
   [0, O.MBX, O.MT, 0, 0],
   [0, 0, O.MT, 0, 0],
@@ -441,17 +400,3 @@ const data = [
   [O.ET, O.ET, O.ET, O.ET, O.ET],
   [O.ET, O.ET, O.ET, O.ET, O.ET],
 ];
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -14,48 +14,76 @@ gl.viewport(0, 0, canvas.width, canvas.height);
 gl.clearColor(1.9, 0.6, 2.9, 1.0);
 gl.clear(gl.COLOR_BUFFER_BIT);
 
-
-
 /* ------------------------------------------ BACKGROUND SETUP --------------------------------------------------------------------*/
 const backgroundVertices = [
-  -1500.0, -1500.0, 0.0,
-  1500.0, -1500.0, 0.0,
-  -1500.0, 1500.0, 0.0,
-  1500.0, 1500.0, 0.0,
+  -1500.0, -1500.0, 0.0, 1500.0, -1500.0, 0.0, -1500.0, 1500.0, 0.0, 1500.0,
+  1500.0, 0.0,
 ];
-
 
 // Buffer Setup for Background
 const backgroundVertexBuffer = gl.createBuffer();
 gl.bindBuffer(gl.ARRAY_BUFFER, backgroundVertexBuffer);
-gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(backgroundVertices), gl.STATIC_DRAW);
+gl.bufferData(
+  gl.ARRAY_BUFFER,
+  new Float32Array(backgroundVertices),
+  gl.STATIC_DRAW
+);
 
 // Shader Compilation and Linking for Background
-const vertexShaderBackground = compileShader(gl, vertexShaderSourceBackground, gl.VERTEX_SHADER);
-const fragmentShaderBackground = compileShader(gl, fragmentShaderSourceBackground, gl.FRAGMENT_SHADER);
+const vertexShaderBackground = compileShader(
+  gl,
+  vertexShaderSourceBackground,
+  gl.VERTEX_SHADER
+);
+const fragmentShaderBackground = compileShader(
+  gl,
+  fragmentShaderSourceBackground,
+  gl.FRAGMENT_SHADER
+);
 
-const shaderProgramBackground = linkProgram(gl, vertexShaderBackground, fragmentShaderBackground);
+const shaderProgramBackground = linkProgram(
+  gl,
+  vertexShaderBackground,
+  fragmentShaderBackground
+);
 gl.useProgram(shaderProgramBackground);
 
 // Attribute and Uniform Locations for Background
-const positionAttribLocationBackground = gl.getAttribLocation(shaderProgramBackground, "a_position");
-const modelViewMatrixLocationBackground = gl.getUniformLocation(shaderProgramBackground, "u_modelViewMatrix");
-const projectionMatrixLocationBackground = gl.getUniformLocation(shaderProgramBackground, "u_projectionMatrix");
-const textureLocationBackground = gl.getUniformLocation(shaderProgramBackground, "u_texture");
+const positionAttribLocationBackground = gl.getAttribLocation(
+  shaderProgramBackground,
+  "a_position"
+);
+const modelViewMatrixLocationBackground = gl.getUniformLocation(
+  shaderProgramBackground,
+  "u_modelViewMatrix"
+);
+const projectionMatrixLocationBackground = gl.getUniformLocation(
+  shaderProgramBackground,
+  "u_projectionMatrix"
+);
+const textureLocationBackground = gl.getUniformLocation(
+  shaderProgramBackground,
+  "u_texture"
+);
 
 const backgroundTexture = gl.createTexture();
 const backgroundTextureImage = new Image();
-backgroundTextureImage.src = './background14.jpg';
+backgroundTextureImage.src = "./assets/img/background14.jpg";
 
 backgroundTextureImage.onload = function () {
   gl.activeTexture(gl.TEXTURE1); // Use a different texture unit
   gl.bindTexture(gl.TEXTURE_2D, backgroundTexture);
-  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, backgroundTextureImage);
+  gl.texImage2D(
+    gl.TEXTURE_2D,
+    0,
+    gl.RGBA,
+    gl.RGBA,
+    gl.UNSIGNED_BYTE,
+    backgroundTextureImage
+  );
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 };
-
-
 
 /* ------------------------------------------ SPHERE 1 SETUP --------------------------------------------------------------------*/
 
@@ -63,12 +91,16 @@ const sphere1Radius = 0.9;
 const sphere1LatitudeBands = 30;
 const sphere1LongitudeBands = 30;
 
-const { vertices: vertices1, textureCoords: textureCoords1, normals: normals1, indices: indices1 } = generateSphereVertices(
+const {
+  vertices: vertices1,
+  textureCoords: textureCoords1,
+  normals: normals1,
+  indices: indices1,
+} = generateSphereVertices(
   sphere1Radius,
   sphere1LatitudeBands,
   sphere1LongitudeBands
 );
-
 
 // Buffer Setup for Sphere 1
 const vertexBuffer1 = gl.createBuffer();
@@ -85,14 +117,16 @@ gl.bufferData(
 
 const texCoordBuffer1 = gl.createBuffer(); //texture -------------------------
 gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer1);
-gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(textureCoords1), gl.STATIC_DRAW);
+gl.bufferData(
+  gl.ARRAY_BUFFER,
+  new Float32Array(textureCoords1),
+  gl.STATIC_DRAW
+);
 
 // NORMAL BUFFER
-const normalBuffer1 = gl.createBuffer();   //normal *****************
+const normalBuffer1 = gl.createBuffer(); //normal *****************
 gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer1);
 gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normals1), gl.STATIC_DRAW);
-
-
 
 // Shader Compilation and Linking for Sphere 1
 const vertexShader1 = compileShader(gl, vertexShaderSource, gl.VERTEX_SHADER);
@@ -105,31 +139,27 @@ const fragmentShader1 = compileShader(
 const shaderProgram1 = linkProgram(gl, vertexShader1, fragmentShader1);
 gl.useProgram(shaderProgram1);
 
-
 // Attribute and Uniform Locations for Sphere 1
 const positionAttribLocation1 = gl.getAttribLocation(
   shaderProgram1,
   "a_position"
 );
 
-const texCoordAttribLocation1 = gl.getAttribLocation(//texture -------------------------
+const texCoordAttribLocation1 = gl.getAttribLocation(
+  //texture
   shaderProgram1,
   "a_texCoord"
 );
 
-
-const normalAttribLocation1 = gl.getAttribLocation(shaderProgram1, "a_normal");  //normal *****************
-gl.vertexAttribPointer(normalAttribLocation1, 3, gl.FLOAT, false, 0, 0); //normal*********
-gl.enableVertexAttribArray(normalAttribLocation1); //normal *********
-
-
+const normalAttribLocation1 = gl.getAttribLocation(shaderProgram1, "a_normal"); //normal
+gl.vertexAttribPointer(normalAttribLocation1, 3, gl.FLOAT, false, 0, 0); //normal
+gl.enableVertexAttribArray(normalAttribLocation1); //normal
 
 gl.vertexAttribPointer(positionAttribLocation1, 3, gl.FLOAT, false, 0, 0);
-gl.vertexAttribPointer(texCoordAttribLocation1, 2, gl.FLOAT, false, 0, 0); //texture -------------------------
+gl.vertexAttribPointer(texCoordAttribLocation1, 2, gl.FLOAT, false, 0, 0); //texture
 
 gl.enableVertexAttribArray(positionAttribLocation1);
-gl.enableVertexAttribArray(texCoordAttribLocation1); //texture ----------------------------
-
+gl.enableVertexAttribArray(texCoordAttribLocation1); //texture
 
 const modelViewMatrixLocation1 = gl.getUniformLocation(
   shaderProgram1,
@@ -141,50 +171,56 @@ const projectionMatrixLocation1 = gl.getUniformLocation(
 );
 
 // Add uniform location for the normal matrix if not already present
-const normalMatrixLocation1 = gl.getUniformLocation(shaderProgram1, "u_normalMatrix"); //normal *****************
+const normalMatrixLocation1 = gl.getUniformLocation(
+  shaderProgram1,
+  "u_normalMatrix"
+); //normal
 
-
-
-
-const textureLocation1 = gl.getUniformLocation(shaderProgram1, "u_texture"); //texture ----------------------------
+const textureLocation1 = gl.getUniformLocation(shaderProgram1, "u_texture"); //texture
 
 //  Load and Bind Texture
 const texture1 = gl.createTexture();
 const textureImage1 = new Image();
-textureImage1.src = './textureRed1.jpg';
+textureImage1.src = "./assets/img/textureRed1.jpg";
 
-textureImage1.onload = function () { //texture ----------------------------
-    gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, texture1);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, textureImage1);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    
+textureImage1.onload = function () {
+  //texture
+  gl.activeTexture(gl.TEXTURE0);
+  gl.bindTexture(gl.TEXTURE_2D, texture1);
+  gl.texImage2D(
+    gl.TEXTURE_2D,
+    0,
+    gl.RGBA,
+    gl.RGBA,
+    gl.UNSIGNED_BYTE,
+    textureImage1
+  );
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 
-    // Generate mipmaps and set texture filter for minification
-      gl.generateMipmap(gl.TEXTURE_2D);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+  // Generate mipmaps and set texture filter for minification
+  gl.generateMipmap(gl.TEXTURE_2D);
+  gl.texParameteri(
+    gl.TEXTURE_2D,
+    gl.TEXTURE_MIN_FILTER,
+    gl.LINEAR_MIPMAP_LINEAR
+  );
 
-    // Set the texture uniform in your rendering loop
-    gl.useProgram(shaderProgram1);
-    gl.uniform1i(textureLocation1, 0);
+  // Set the texture uniform in your rendering loop
+  gl.useProgram(shaderProgram1);
+  gl.uniform1i(textureLocation1, 0);
 };
-
-
-
-
-
-
-
 
 /* ------------------------------------------ TILE SETUP --------------------------------------------------------------------*/
 
 const tileSize = 4.0;
 const tileHeight = 0.3;
-const { vertices: tileVertices,textureCoords: textureCoordsTile,normals:tileNormals, indices: tileIndices } = generateTileVertices(
-  tileSize,
-  tileHeight
-);
+const {
+  vertices: tileVertices,
+  textureCoords: textureCoordsTile,
+  normals: tileNormals,
+  indices: tileIndices,
+} = generateTileVertices(tileSize, tileHeight);
 
 // Buffer Setup for Tiles
 const tileVertexBuffer = gl.createBuffer();
@@ -199,16 +235,17 @@ gl.bufferData(
   gl.STATIC_DRAW
 );
 
-
-
 const texCoordBufferTile = gl.createBuffer(); //texture -------------------------
 gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBufferTile);
-gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(textureCoordsTile), gl.STATIC_DRAW);
+gl.bufferData(
+  gl.ARRAY_BUFFER,
+  new Float32Array(textureCoordsTile),
+  gl.STATIC_DRAW
+);
 
 const normalBufferTile = gl.createBuffer(); //NORMALS ************************
 gl.bindBuffer(gl.ARRAY_BUFFER, normalBufferTile);
 gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(tileNormals), gl.STATIC_DRAW);
-
 
 // Shader Compilation and Linking for Tiles
 const vertexShaderTile = compileShader(
@@ -231,26 +268,24 @@ const positionAttribLocationTile = gl.getAttribLocation(
   "a_position"
 );
 
-const texCoordAttribLocationTile = gl.getAttribLocation(//texture -------------------------
+const texCoordAttribLocationTile = gl.getAttribLocation(
+  //texture -------------------------
   shaderProgramTile,
   "a_texCoord"
 );
 
-
-const normalAttribLocationTile = gl.getAttribLocation(shaderProgramTile, "a_normal");  //normal *****************
+const normalAttribLocationTile = gl.getAttribLocation(
+  shaderProgramTile,
+  "a_normal"
+); //normal *****************
 gl.vertexAttribPointer(normalAttribLocationTile, 3, gl.FLOAT, false, 0, 0); //normal
-gl.enableVertexAttribArray(normalAttribLocationTile); //normal 
-
-
+gl.enableVertexAttribArray(normalAttribLocationTile); //normal
 
 gl.vertexAttribPointer(positionAttribLocationTile, 3, gl.FLOAT, false, 0, 0);
 gl.vertexAttribPointer(texCoordAttribLocationTile, 2, gl.FLOAT, false, 0, 0); //texture -------------------------
 
-
 gl.enableVertexAttribArray(positionAttribLocationTile);
 gl.enableVertexAttribArray(texCoordAttribLocationTile); //texture ----------------------------
-
-
 
 const modelViewMatrixLocationTile = gl.getUniformLocation(
   shaderProgramTile,
@@ -261,40 +296,58 @@ const projectionMatrixLocationTile = gl.getUniformLocation(
   "u_projectionMatrix"
 );
 
+const normalMatrixLocationTile = gl.getUniformLocation(
+  shaderProgramTile,
+  "u_normalMatrix"
+); //normal *****************
 
-const normalMatrixLocationTile = gl.getUniformLocation(shaderProgramTile, "u_normalMatrix"); //normal *****************
-
-const textureLocationTile = gl.getUniformLocation(shaderProgramTile, "u_texture"); //texture ----------------------------
+const textureLocationTile = gl.getUniformLocation(
+  shaderProgramTile,
+  "u_texture"
+); //texture ----------------------------
 
 //  Load and Bind Texture
 const textureTile = gl.createTexture();
 const textureImageTile = new Image();
-textureImageTile.src = './yellowTexture.jpg';
+textureImageTile.src = "./assets/img/yellowTexture.jpg";
 
-textureImageTile.onload = function () { //texture ----------------------------
-    gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, textureTile);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, textureImageTile);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    
+textureImageTile.onload = function () {
+  //texture ----------------------------
+  gl.activeTexture(gl.TEXTURE0);
+  gl.bindTexture(gl.TEXTURE_2D, textureTile);
+  gl.texImage2D(
+    gl.TEXTURE_2D,
+    0,
+    gl.RGBA,
+    gl.RGBA,
+    gl.UNSIGNED_BYTE,
+    textureImageTile
+  );
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 
-    // Generate mipmaps and set texture filter for minification
-      gl.generateMipmap(gl.TEXTURE_2D);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+  // Generate mipmaps and set texture filter for minification
+  gl.generateMipmap(gl.TEXTURE_2D);
+  gl.texParameteri(
+    gl.TEXTURE_2D,
+    gl.TEXTURE_MIN_FILTER,
+    gl.LINEAR_MIPMAP_LINEAR
+  );
 
-    // Set the texture uniform in your rendering loop
-    gl.useProgram(shaderProgramTile);
-    gl.uniform1i(textureLocationTile, 0);
+  // Set the texture uniform in your rendering loop
+  gl.useProgram(shaderProgramTile);
+  gl.uniform1i(textureLocationTile, 0);
 };
-
 
 /* ------------------------------------------ MOVING TILE SETUP --------------------------------------------------------------------*/
 
 const movTileSize = 4.0;
 const movTileHeight = 0.3;
-const { vertices: movTileVertices, textureCoords: textureCoordsTileM, indices: movTileIndices } =
-  generateMovTileVertices(movTileSize, movTileHeight);
+const {
+  vertices: movTileVertices,
+  textureCoords: textureCoordsTileM,
+  indices: movTileIndices,
+} = generateMovTileVertices(movTileSize, movTileHeight);
 
 // Buffer Setup for Tiles
 const movTileVertexBuffer = gl.createBuffer();
@@ -315,7 +368,11 @@ gl.bufferData(
 
 const texCoordBufferTileM = gl.createBuffer(); //texture -------------------------
 gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBufferTileM);
-gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(textureCoordsTileM), gl.STATIC_DRAW);
+gl.bufferData(
+  gl.ARRAY_BUFFER,
+  new Float32Array(textureCoordsTileM),
+  gl.STATIC_DRAW
+);
 
 // Shader Compilation and Linking for Tiles
 const vertexShaderMovTile = compileShader(
@@ -342,7 +399,8 @@ const positionAttribLocationMovTile = gl.getAttribLocation(
   "a_position"
 );
 
-const texCoordAttribLocationTileM = gl.getAttribLocation(//texture -------------------------
+const texCoordAttribLocationTileM = gl.getAttribLocation(
+  //texture -------------------------
   shaderProgramMovTile,
   "a_texCoord"
 );
@@ -353,7 +411,6 @@ gl.vertexAttribPointer(texCoordAttribLocationTileM, 2, gl.FLOAT, false, 0, 0); /
 gl.enableVertexAttribArray(positionAttribLocationMovTile);
 gl.enableVertexAttribArray(texCoordAttribLocationTileM); //texture ----------------------------
 
-
 const modelViewMatrixLocationMovTile = gl.getUniformLocation(
   shaderProgramMovTile,
   "u_modelViewMatrix"
@@ -363,32 +420,43 @@ const projectionMatrixLocationMovTile = gl.getUniformLocation(
   "u_projectionMatrix"
 );
 
-
-const textureLocationTileM = gl.getUniformLocation(shaderProgramMovTile, "u_texture"); //texture ----------------------------
-
+const textureLocationTileM = gl.getUniformLocation(
+  shaderProgramMovTile,
+  "u_texture"
+); //texture ----------------------------
 
 //  Load and Bind Texture
 const textureTileM = gl.createTexture();
 const textureImageTileM = new Image();
-textureImageTileM.src = './yellow.jpg';
+textureImageTileM.src = "./assets/img/yellow.jpg";
 
-textureImageTileM.onload = function () { //texture ----------------------------
-    gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, textureTileM);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, textureImageTileM);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    
+textureImageTileM.onload = function () {
+  //texture ----------------------------
+  gl.activeTexture(gl.TEXTURE0);
+  gl.bindTexture(gl.TEXTURE_2D, textureTileM);
+  gl.texImage2D(
+    gl.TEXTURE_2D,
+    0,
+    gl.RGBA,
+    gl.RGBA,
+    gl.UNSIGNED_BYTE,
+    textureImageTileM
+  );
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 
-    // Generate mipmaps and set texture filter for minification
-      gl.generateMipmap(gl.TEXTURE_2D);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+  // Generate mipmaps and set texture filter for minification
+  gl.generateMipmap(gl.TEXTURE_2D);
+  gl.texParameteri(
+    gl.TEXTURE_2D,
+    gl.TEXTURE_MIN_FILTER,
+    gl.LINEAR_MIPMAP_LINEAR
+  );
 
-    // Set the texture uniform in your rendering loop
-    gl.useProgram(shaderProgramMovTile);
-    gl.uniform1i(textureLocationTileM, 0);
-
-}
+  // Set the texture uniform in your rendering loop
+  gl.useProgram(shaderProgramMovTile);
+  gl.uniform1i(textureLocationTileM, 0);
+};
 /* ------------------------------------------ JUMPING MOVING TILE SETUP --------------------------------------------------------------------*/
 
 const jmovTileSize = 4.0;
@@ -521,15 +589,15 @@ const projectionMatrixLocationJumpTile = gl.getUniformLocation(
   "u_projectionMatrix"
 );
 
-
 /* ------------------------------------------ END TILE SETUP --------------------------------------------------------------------*/
 
 const eTileSize = 4.0;
 const eTileHeight = 0.3;
-const { vertices: eTileVertices, textureCoords: textureCoordsTileEnd, indices: eTileIndices } = generateTileVertices(
-  eTileSize,
-  eTileHeight
-);
+const {
+  vertices: eTileVertices,
+  textureCoords: textureCoordsTileEnd,
+  indices: eTileIndices,
+} = generateTileVertices(eTileSize, eTileHeight);
 
 // Buffer Setup for Tiles
 const eTileVertexBuffer = gl.createBuffer();
@@ -546,7 +614,11 @@ gl.bufferData(
 
 const texCoordBufferTileEnd = gl.createBuffer(); //texture -------------------------
 gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBufferTileEnd);
-gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(textureCoordsTileEnd), gl.STATIC_DRAW);
+gl.bufferData(
+  gl.ARRAY_BUFFER,
+  new Float32Array(textureCoordsTileEnd),
+  gl.STATIC_DRAW
+);
 
 // Shader Compilation and Linking for Tiles
 const vertexShaderEndTile = compileShader(
@@ -572,7 +644,8 @@ const positionAttribLocationEndTile = gl.getAttribLocation(
   shaderProgramEndTile,
   "a_position"
 );
-const texCoordAttribLocationTileEnd = gl.getAttribLocation(//texture -------------------------
+const texCoordAttribLocationTileEnd = gl.getAttribLocation(
+  //texture -------------------------
   shaderProgramEndTile,
   "a_texCoord"
 );
@@ -581,13 +654,6 @@ gl.vertexAttribPointer(texCoordAttribLocationTileEnd, 2, gl.FLOAT, false, 0, 0);
 
 gl.enableVertexAttribArray(positionAttribLocationEndTile);
 gl.enableVertexAttribArray(texCoordAttribLocationTileEnd); //texture ----------------------------
-
-
-
-
-
-
-
 
 const modelViewMatrixLocationEndTile = gl.getUniformLocation(
   shaderProgramEndTile,
@@ -598,41 +664,54 @@ const projectionMatrixLocationEndTile = gl.getUniformLocation(
   "u_projectionMatrix"
 );
 
-
-const textureLocationTileEnd = gl.getUniformLocation(shaderProgramEndTile, "u_texture"); //texture ----------------------------
-
+const textureLocationTileEnd = gl.getUniformLocation(
+  shaderProgramEndTile,
+  "u_texture"
+); //texture ----------------------------
 
 //  Load and Bind Texture
 const textureTileEnd = gl.createTexture();
 const textureImageTileEnd = new Image();
-textureImageTileEnd.src = './background13.jpg';
+textureImageTileEnd.src = "./assets/img/background13.jpg";
 
-textureImageTileEnd.onload = function () { //texture ----------------------------
-    gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, textureTileEnd);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, textureImageTileEnd);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    
+textureImageTileEnd.onload = function () {
+  //texture ----------------------------
+  gl.activeTexture(gl.TEXTURE0);
+  gl.bindTexture(gl.TEXTURE_2D, textureTileEnd);
+  gl.texImage2D(
+    gl.TEXTURE_2D,
+    0,
+    gl.RGBA,
+    gl.RGBA,
+    gl.UNSIGNED_BYTE,
+    textureImageTileEnd
+  );
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 
-    // Generate mipmaps and set texture filter for minification
-      gl.generateMipmap(gl.TEXTURE_2D);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+  // Generate mipmaps and set texture filter for minification
+  gl.generateMipmap(gl.TEXTURE_2D);
+  gl.texParameteri(
+    gl.TEXTURE_2D,
+    gl.TEXTURE_MIN_FILTER,
+    gl.LINEAR_MIPMAP_LINEAR
+  );
 
-    // Set the texture uniform in your rendering loop
-    gl.useProgram(shaderProgramEndTile);
-    gl.uniform1i(textureLocationTileEnd, 0);
-
-}
+  // Set the texture uniform in your rendering loop
+  gl.useProgram(shaderProgramEndTile);
+  gl.uniform1i(textureLocationTileEnd, 0);
+};
 
 /* ------------------------------------------ BOX OBSTACLE SETUP --------------------------------------------------------------------*/
 
 const boxSize = 4.0;
 const boxHeight = 2.0;
-const { vertices: boxVertices,textureCoords: textureCoordsBox, normals: normalsBox, indices: boxIndices } = generateBoxVertices(
-  boxSize,
-  boxHeight
-);
+const {
+  vertices: boxVertices,
+  textureCoords: textureCoordsBox,
+  normals: normalsBox,
+  indices: boxIndices,
+} = generateBoxVertices(boxSize, boxHeight);
 
 // Buffer Setup for Box
 const boxVertexBuffer = gl.createBuffer();
@@ -649,14 +728,16 @@ gl.bufferData(
 
 const texCoordBufferBox = gl.createBuffer(); //texture -------------------------
 gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBufferBox);
-gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(textureCoordsBox), gl.STATIC_DRAW);
-
+gl.bufferData(
+  gl.ARRAY_BUFFER,
+  new Float32Array(textureCoordsBox),
+  gl.STATIC_DRAW
+);
 
 // NORMAL BUFFER
-const normalBufferBox = gl.createBuffer();   //normal *****************
+const normalBufferBox = gl.createBuffer(); //normal *****************
 gl.bindBuffer(gl.ARRAY_BUFFER, normalBufferBox);
 gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normalsBox), gl.STATIC_DRAW);
-
 
 // Shader Compilation and Linking for Tiles
 const vertexShaderBox = compileShader(
@@ -678,7 +759,8 @@ const positionAttribLocationBox = gl.getAttribLocation(
   shaderProgramBox,
   "a_position"
 );
-const texCoordAttribLocationBox = gl.getAttribLocation(//texture -------------------------
+const texCoordAttribLocationBox = gl.getAttribLocation(
+  //texture -------------------------
   shaderProgramBox,
   "a_texCoord"
 );
@@ -688,16 +770,18 @@ gl.vertexAttribPointer(texCoordAttribLocationBox, 2, gl.FLOAT, false, 0, 0); //t
 gl.enableVertexAttribArray(positionAttribLocationBox);
 gl.enableVertexAttribArray(texCoordAttribLocationBox); //texture ----------------------------
 
-
-
-const normalAttribLocationBox = gl.getAttribLocation(shaderProgramBox, "a_normal");  //normal *****************
+const normalAttribLocationBox = gl.getAttribLocation(
+  shaderProgramBox,
+  "a_normal"
+); //normal *****************
 gl.vertexAttribPointer(normalAttribLocationBox, 3, gl.FLOAT, false, 0, 0); //normal*********
 gl.enableVertexAttribArray(normalAttribLocationBox); //normal *********
 
-
-
 // Add uniform location for the normal matrix if not already present
-const normalMatrixLocationBox = gl.getUniformLocation(shaderProgramBox, "u_normalMatrix"); //normal *****************
+const normalMatrixLocationBox = gl.getUniformLocation(
+  shaderProgramBox,
+  "u_normalMatrix"
+); //normal *****************
 
 const modelViewMatrixLocationBox = gl.getUniformLocation(
   shaderProgramBox,
@@ -710,38 +794,49 @@ const projectionMatrixLocationBox = gl.getUniformLocation(
 
 const textureLocationBox = gl.getUniformLocation(shaderProgramBox, "u_texture"); //texture ----------------------------
 
-
 //  Load and Bind Texture
 const textureBox = gl.createTexture();
 const textureImageBox = new Image();
-textureImageBox.src = './blueTexture3.jpeg';
+textureImageBox.src = "./assets/img/blueTexture3.jpeg";
 
-textureImageBox.onload = function () { //texture ----------------------------
-    gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, textureBox);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, textureImageBox);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    
+textureImageBox.onload = function () {
+  //texture ----------------------------
+  gl.activeTexture(gl.TEXTURE0);
+  gl.bindTexture(gl.TEXTURE_2D, textureBox);
+  gl.texImage2D(
+    gl.TEXTURE_2D,
+    0,
+    gl.RGBA,
+    gl.RGBA,
+    gl.UNSIGNED_BYTE,
+    textureImageBox
+  );
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 
-    // Generate mipmaps and set texture filter for minification
-      gl.generateMipmap(gl.TEXTURE_2D);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+  // Generate mipmaps and set texture filter for minification
+  gl.generateMipmap(gl.TEXTURE_2D);
+  gl.texParameteri(
+    gl.TEXTURE_2D,
+    gl.TEXTURE_MIN_FILTER,
+    gl.LINEAR_MIPMAP_LINEAR
+  );
 
-    // Set the texture uniform in your rendering loop
-    gl.useProgram(shaderProgramBox);
-    gl.uniform1i(textureLocationBox, 0);
-
-}
+  // Set the texture uniform in your rendering loop
+  gl.useProgram(shaderProgramBox);
+  gl.uniform1i(textureLocationBox, 0);
+};
 
 /* ------------------------------------------ MOVING BOX OBSTACLE SETUP --------------------------------------------------------------------*/
 
 const mboxSize = 4.0;
 const mboxHeight = 2.0;
-const { vertices: mboxVertices, textureCoords: textureCoordsBoxM,normals: normalsBoxM, indices: mboxIndices } = generateBoxVertices(
-  boxSize,
-  boxHeight
-);
+const {
+  vertices: mboxVertices,
+  textureCoords: textureCoordsBoxM,
+  normals: normalsBoxM,
+  indices: mboxIndices,
+} = generateBoxVertices(boxSize, boxHeight);
 
 // Buffer Setup for Box
 const mboxVertexBuffer = gl.createBuffer();
@@ -758,16 +853,16 @@ gl.bufferData(
 
 const texCoordBufferBoxM = gl.createBuffer(); //texture -------------------------
 gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBufferBoxM);
-gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(textureCoordsBoxM), gl.STATIC_DRAW);
-
+gl.bufferData(
+  gl.ARRAY_BUFFER,
+  new Float32Array(textureCoordsBoxM),
+  gl.STATIC_DRAW
+);
 
 // NORMAL BUFFER
-const normalBufferBoxM = gl.createBuffer();   //normal *****************
+const normalBufferBoxM = gl.createBuffer(); //normal *****************
 gl.bindBuffer(gl.ARRAY_BUFFER, normalBufferBoxM);
 gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normalsBoxM), gl.STATIC_DRAW);
-
-
-
 
 // Shader Compilation and Linking for Tiles
 const vertexShaderMbox = compileShader(
@@ -790,30 +885,30 @@ const positionAttribLocationMbox = gl.getAttribLocation(
   "a_position"
 );
 
-const texCoordAttribLocationMbox = gl.getAttribLocation(//texture -------------------------
+const texCoordAttribLocationMbox = gl.getAttribLocation(
+  //texture -------------------------
   shaderProgramMbox,
   "a_texCoord"
 );
 
-
-
-const normalAttribLocationBoxM = gl.getAttribLocation(shaderProgramMbox, "a_normal");  //normal *****************
+const normalAttribLocationBoxM = gl.getAttribLocation(
+  shaderProgramMbox,
+  "a_normal"
+); //normal *****************
 gl.vertexAttribPointer(normalAttribLocationBoxM, 3, gl.FLOAT, false, 0, 0); //normal*********
 gl.enableVertexAttribArray(normalAttribLocationBoxM); //normal *********
 
-
-
 // Add uniform location for the normal matrix if not already present
-const normalMatrixLocationBoxM = gl.getUniformLocation(shaderProgramMbox, "u_normalMatrix"); //normal *****************
-
-
+const normalMatrixLocationBoxM = gl.getUniformLocation(
+  shaderProgramMbox,
+  "u_normalMatrix"
+); //normal *****************
 
 gl.vertexAttribPointer(positionAttribLocationMbox, 3, gl.FLOAT, false, 0, 0);
 gl.vertexAttribPointer(texCoordAttribLocationMbox, 2, gl.FLOAT, false, 0, 0); //texture -------------------------
 
 gl.enableVertexAttribArray(positionAttribLocationMbox);
 gl.enableVertexAttribArray(texCoordAttribLocationMbox); //texture ----------------------------
-
 
 const modelViewMatrixLocationMbox = gl.getUniformLocation(
   shaderProgramMbox,
@@ -824,36 +919,55 @@ const projectionMatrixLocationMbox = gl.getUniformLocation(
   "u_projectionMatrix"
 );
 
-const textureLocationMbox = gl.getUniformLocation(shaderProgramMbox, "u_texture"); //texture ----------------------------
-const textureSizeLocationMbox = gl.getUniformLocation(shaderProgramMbox, "u_textureSize");
-
+const textureLocationMbox = gl.getUniformLocation(
+  shaderProgramMbox,
+  "u_texture"
+); //texture ----------------------------
+const textureSizeLocationMbox = gl.getUniformLocation(
+  shaderProgramMbox,
+  "u_textureSize"
+);
 
 //  Load and Bind Texture
 const textureMbox = gl.createTexture();
 const textureImageMbox = new Image();
-textureImageMbox.src = './blueTexture3.jpeg';
+textureImageMbox.src = "./assets/img/blueTexture3.jpeg";
 
-textureImageMbox.onload = function () { //texture ----------------------------
-    gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, textureMbox);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, textureImageMbox);
- // Set texture filtering for magnification (when texture is enlarged)
-gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+textureImageMbox.onload = function () {
+  //texture ----------------------------
+  gl.activeTexture(gl.TEXTURE0);
+  gl.bindTexture(gl.TEXTURE_2D, textureMbox);
+  gl.texImage2D(
+    gl.TEXTURE_2D,
+    0,
+    gl.RGBA,
+    gl.RGBA,
+    gl.UNSIGNED_BYTE,
+    textureImageMbox
+  );
+  // Set texture filtering for magnification (when texture is enlarged)
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 
-// Set texture filtering for minification (when texture is reduced in size)
-gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-    
+  // Set texture filtering for minification (when texture is reduced in size)
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
 
-    // Generate mipmaps and set texture filter for minification
-      gl.generateMipmap(gl.TEXTURE_2D);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+  // Generate mipmaps and set texture filter for minification
+  gl.generateMipmap(gl.TEXTURE_2D);
+  gl.texParameteri(
+    gl.TEXTURE_2D,
+    gl.TEXTURE_MIN_FILTER,
+    gl.LINEAR_MIPMAP_LINEAR
+  );
 
-    // Set the texture uniform in your rendering loop
-    gl.useProgram(shaderProgramMbox);
-    gl.uniform2f(textureSizeLocationMbox, textureImageMbox.width, textureImageMbox.height);
-    gl.uniform1i(textureSizeLocationMbox, 0);
-
-}
+  // Set the texture uniform in your rendering loop
+  gl.useProgram(shaderProgramMbox);
+  gl.uniform2f(
+    textureSizeLocationMbox,
+    textureImageMbox.width,
+    textureImageMbox.height
+  );
+  gl.uniform1i(textureSizeLocationMbox, 0);
+};
 /* --------------------------------------------- RENDER MOVING BOX OBSTACLES --------------------------------------------------------------------*/
 
 let movingTilePositionBox = 0;
@@ -903,8 +1017,14 @@ function renderMboxes() {
           0,
           0
         );
-        gl.vertexAttribPointer(texCoordAttribLocationMbox, 2, gl.FLOAT, false, 0, 0);  //texture---------------------------
-
+        gl.vertexAttribPointer(
+          texCoordAttribLocationMbox,
+          2,
+          gl.FLOAT,
+          false,
+          0,
+          0
+        ); //texture---------------------------
 
         // Set uniforms for transformation matrices for Boxes
         gl.uniformMatrix4fv(
@@ -921,14 +1041,19 @@ function renderMboxes() {
         gl.bindTexture(gl.TEXTURE_2D, textureMbox); //texture---------------------------
         gl.uniform1i(textureLocationMbox, 0); //texture---------------------------
 
-
-        gl.vertexAttribPointer(normalAttribLocationBoxM, 3, gl.FLOAT, false, 0, 0); //normal*********
+        gl.vertexAttribPointer(
+          normalAttribLocationBoxM,
+          3,
+          gl.FLOAT,
+          false,
+          0,
+          0
+        ); //normal*********
         gl.enableVertexAttribArray(normalAttribLocationBoxM); //normal *********
         const normalMatrixBoxM = mat3.create();
         mat3.normalFromMat4(normalMatrixBoxM, modelViewMatrix); // assuming modelViewMatrix is available
-        
-        gl.uniformMatrix3fv(normalMatrixLocationBoxM, false, normalMatrixBoxM);
 
+        gl.uniformMatrix3fv(normalMatrixLocationBoxM, false, normalMatrixBoxM);
 
         // Draw Boxes
         gl.drawElements(gl.TRIANGLES, mboxIndices.length, gl.UNSIGNED_SHORT, 0);
@@ -974,8 +1099,14 @@ function renderMboxes() {
           0,
           0
         );
-        gl.vertexAttribPointer(texCoordAttribLocationMbox, 2, gl.FLOAT, false, 0, 0);  //texture---------------------------
-
+        gl.vertexAttribPointer(
+          texCoordAttribLocationMbox,
+          2,
+          gl.FLOAT,
+          false,
+          0,
+          0
+        ); //texture---------------------------
 
         // Set uniforms for transformation matrices for Boxes
         gl.uniformMatrix4fv(
@@ -992,12 +1123,17 @@ function renderMboxes() {
         gl.bindTexture(gl.TEXTURE_2D, textureMbox); //texture---------------------------
         gl.uniform1i(textureLocationMbox, 0); //texture---------------------------
 
-
-        gl.vertexAttribPointer(normalAttribLocationBoxM, 3, gl.FLOAT, false, 0, 0); //normal*********
+        gl.vertexAttribPointer(
+          normalAttribLocationBoxM,
+          3,
+          gl.FLOAT,
+          false,
+          0,
+          0
+        ); //normal*********
         gl.enableVertexAttribArray(normalAttribLocationBoxM); //normal *********
         const normalMatrixBoxM = mat3.create();
         mat3.normalFromMat4(normalMatrixBoxM, modelViewMatrix); // assuming modelViewMatrix is available
-
 
         // Draw Boxes
         gl.drawElements(gl.TRIANGLES, mboxIndices.length, gl.UNSIGNED_SHORT, 0);
@@ -1047,8 +1183,14 @@ function renderBoxes() {
           0,
           0
         );
-        gl.vertexAttribPointer(texCoordAttribLocationBox, 2, gl.FLOAT, false, 0, 0);  //texture---------------------------
-
+        gl.vertexAttribPointer(
+          texCoordAttribLocationBox,
+          2,
+          gl.FLOAT,
+          false,
+          0,
+          0
+        ); //texture---------------------------
 
         // Set uniforms for transformation matrices for Boxes
         gl.uniformMatrix4fv(modelViewMatrixLocationBox, false, modelViewMatrix);
@@ -1058,19 +1200,23 @@ function renderBoxes() {
           projectionMatrix
         );
 
-        gl.vertexAttribPointer(normalAttribLocationBox, 3, gl.FLOAT, false, 0, 0); //normal*********
+        gl.vertexAttribPointer(
+          normalAttribLocationBox,
+          3,
+          gl.FLOAT,
+          false,
+          0,
+          0
+        ); //normal*********
         gl.enableVertexAttribArray(normalAttribLocationBox); //normal *********
         const normalMatrixBox = mat3.create();
         mat3.normalFromMat4(normalMatrixBox, modelViewMatrix); // assuming modelViewMatrix is available
-        
+
         gl.uniformMatrix3fv(normalMatrixLocationBox, false, normalMatrixBox);
-
-
 
         gl.activeTexture(gl.TEXTURE0); //texture---------------------------
         gl.bindTexture(gl.TEXTURE_2D, textureBox); //texture---------------------------
         gl.uniform1i(textureLocationBox, 0); //texture---------------------------
-
 
         // Draw Boxes
         gl.drawElements(gl.TRIANGLES, boxIndices.length, gl.UNSIGNED_SHORT, 0);
@@ -1085,7 +1231,7 @@ function renderTiles() {
   for (let row = 0; row < data.length; row++) {
     for (let col = 0; col < data[row].length; col++) {
       const tileType = data[row][col];
-    
+
       // Only render a tile if the data value is not 0 (indicating no tile)
       if (tileType === 1) {
         // Update model-view matrix for translation of Tiles
@@ -1103,9 +1249,6 @@ function renderTiles() {
           row * -4.0 - 5,
         ]);
 
-   
-
-
         // Use shader program and bind vertex buffer for Tiles
         gl.useProgram(shaderProgramTile);
         gl.bindBuffer(gl.ARRAY_BUFFER, tileVertexBuffer);
@@ -1116,7 +1259,6 @@ function renderTiles() {
         gl.enableVertexAttribArray(positionAttribLocationTile);
         gl.enableVertexAttribArray(texCoordAttribLocationTile); //texture---------------------------
 
-        
         gl.vertexAttribPointer(
           positionAttribLocationTile,
           3,
@@ -1125,11 +1267,23 @@ function renderTiles() {
           0,
           0
         );
-        gl.vertexAttribPointer(texCoordAttribLocationTile, 2, gl.FLOAT, false, 0, 0);  //texture---------------------------
+        gl.vertexAttribPointer(
+          texCoordAttribLocationTile,
+          2,
+          gl.FLOAT,
+          false,
+          0,
+          0
+        ); //texture---------------------------
 
-
-
-        gl.vertexAttribPointer(normalAttribLocationTile, 3, gl.FLOAT, false, 0, 0); //normal*********
+        gl.vertexAttribPointer(
+          normalAttribLocationTile,
+          3,
+          gl.FLOAT,
+          false,
+          0,
+          0
+        ); //normal*********
         gl.enableVertexAttribArray(normalAttribLocationTile); //normal *********
 
         // Set uniforms for transformation matrices for Tiles
@@ -1150,10 +1304,9 @@ function renderTiles() {
         gl.uniform1i(textureLocationTile, 0); //texture---------------------------
 
         const normalMatrixTile = mat3.create();
-mat3.normalFromMat4(normalMatrixTile, modelViewMatrix); // assuming modelViewMatrix is available
+        mat3.normalFromMat4(normalMatrixTile, modelViewMatrix); // assuming modelViewMatrix is available
 
-gl.uniformMatrix3fv(normalMatrixLocationTile, false, normalMatrixTile);
-
+        gl.uniformMatrix3fv(normalMatrixLocationTile, false, normalMatrixTile);
 
         // Draw Tiles
         gl.drawElements(gl.TRIANGLES, tileIndices.length, gl.UNSIGNED_SHORT, 0);
@@ -1162,20 +1315,13 @@ gl.uniformMatrix3fv(normalMatrixLocationTile, false, normalMatrixTile);
   }
 }
 
-
-
-   
-
-
-
-
 /* --------------------------------------------- RENDER MOVING TILES --------------------------------------------------------------------*/
 
 let movingTilePosition = 0;
 let startTime = Date.now();
-let translationX ;
-        let translationY ;
-        let translationZ ;
+let translationX;
+let translationY;
+let translationZ;
 
 function getElapsedTime() {
   return Date.now() - totalPausedTime;
@@ -1198,8 +1344,8 @@ function renderMovingTiles() {
         movingTilePosition = Math.sin(getElapsedTime() * 0.003) * 2;
 
         translationX = movingTilePosition + col * tileSize - 2 * tileSize;
-         translationY = -1.0;
-         translationZ = row * -4.0 - 5;
+        translationY = -1.0;
+        translationZ = row * -4.0 - 5;
 
         // Apply translation based on row, column, and tile height
         mat4.translate(modelViewMatrix, modelViewMatrix, [
@@ -1225,7 +1371,14 @@ function renderMovingTiles() {
           0,
           0
         );
-        gl.vertexAttribPointer(texCoordAttribLocationTileM, 2, gl.FLOAT, false, 0, 0);  //texture---------------------------
+        gl.vertexAttribPointer(
+          texCoordAttribLocationTileM,
+          2,
+          gl.FLOAT,
+          false,
+          0,
+          0
+        ); //texture---------------------------
 
         // Set uniforms for transformation matrices for Tiles
         gl.uniformMatrix4fv(
@@ -1429,7 +1582,14 @@ function renderEndTiles() {
           0,
           0
         );
-        gl.vertexAttribPointer(texCoordAttribLocationTileEnd, 2, gl.FLOAT, false, 0, 0);  //texture---------------------------
+        gl.vertexAttribPointer(
+          texCoordAttribLocationTileEnd,
+          2,
+          gl.FLOAT,
+          false,
+          0,
+          0
+        ); //texture---------------------------
 
         // Set uniforms for transformation matrices for Tiles
         gl.uniformMatrix4fv(
@@ -1459,8 +1619,6 @@ function renderEndTiles() {
 
 /* ------------------------------------------ MATRIX AND PROJECTION SETUP --------------------------------------------------------------------*/
 
-
-
 let modelViewMatrix = mat4.create();
 let projectionMatrix = mat4.create();
 let tilePositionX = 0.0; // New variable to store sphere position along the x-axis
@@ -1486,11 +1644,6 @@ cameraPosition[0] = 0; // X-coordinate of the camera
 cameraPosition[1] = 5; // Y-coordinate of the camera (height)
 cameraPosition[2] = 5; // Z-coordinate of the camera
 
-// const lookAtPoint = [0, 0, 1]; // Point the camera is looking at
-
-// // Update model-view matrix for translation of Sphere 1
-// mat4.lookAt(modelViewMatrix, cameraPosition, lookAtPoint, [0.0, 1.0, 0.0]);
-// Apply rotation about the x-axis (pitch)
 
 // Update the model-view matrix for translation
 mat4.lookAt(
@@ -1502,13 +1655,9 @@ mat4.lookAt(
 
 /* --------------------------------------------- VALUES --------------------------------------------------------------------*/
 
-
-
 let pauseGame = false;
 
 let accelerationY = 0.0;
-
-
 
 // let jumpFlag = false;
 const maxHeight = 7;
@@ -1530,26 +1679,21 @@ function introHandle() {
   if (Date.now() - introStartTime > introDuration) {
     introStart = false;
     resetPositions();
-
   }
-  if(cameraPosition[2] > 5){
+  if (cameraPosition[2] > 5) {
     cameraPosition[2] -= 2.3;
     cameraPosition[1] -= 0.0131;
   }
-    cameraPosition[2] += 2.35;
-    cameraPosition[1] += 0.003;
-    mainPositionZ = -9.0;
+  cameraPosition[2] += 2.35;
+  cameraPosition[1] += 0.003;
+  mainPositionZ = -9.0;
 }
 
-// Where to start the camera for Intro? 
-cameraPosition[2] = -1200; // We can automatically adjust with calculations in const 
-
-
-
+// Where to start the camera for Intro?
+cameraPosition[2] = -1200; // We can automatically adjust with calculations in const
 
 // Add a variable to track the rotation angle
 let sphereRotationAngle = 0;
-
 
 /* --------------------------------------------- RENDER LOOP --------------------------------------------------------------------*/
 
@@ -1557,61 +1701,45 @@ let endTileReached = false;
 
 // Rendering Loop
 function render() {
-
-
-
-
-  // show camera introduction 
+  // show camera introduction
   if (introStart) {
-
     introHandle();
-
   }
 
-  //handle pause keys 
+  //handle pause keys
   handlePause();
 
   // run if game is not paused
   if (!pauseGame) {
-    
-    if(mainPositionY > -0.9 && !endTileReached){
+    if (mainPositionY > -0.9 && !endTileReached) {
       handleKeys();
-
     }
-
-
-
-
 
     mainPositionY += gravity;
     if (mainPositionY >= maxHeight) {
       jumpFlag = false; //not allowed to jump after reaching maximum height and only allowed to fall due to gravity;
-      deceleration =0.0011;
-      
+      deceleration = 0.0011;
     }
-    
-    if(jumpFlag){
+
+    if (jumpFlag) {
       mainPositionY += jumpVelocity - deceleration; // increase in height gradually with each collision detected in tile
       deceleration += 0.003;
     }
-    if(!jumpFlag){
+    if (!jumpFlag) {
       mainPositionY -= gravityAcceleration;
       gravityAcceleration += 0.004;
     }
 
-    //Camera follows ball in Z-axis 
-    if(!introStart){
-      cameraPosition[2] = mainPositionZ + 14; // 14 is adjusted distance between camera and ball in Z axis 
+    //Camera follows ball in Z-axis
+    if (!introStart) {
+      cameraPosition[2] = mainPositionZ + 14; // 14 is adjusted distance between camera and ball in Z axis
     }
-    
 
     if (mainPositionY < -9.1) {
       deceleration = 0.0011;
 
       tryAgainMenu();
     }
-
-
 
     // Update model-view matrix for translation of Sphere 1
     mat4.lookAt(
@@ -1621,8 +1749,6 @@ function render() {
       [0.0, 1.0, 1.0]
     );
 
-
-
     // mat4.identity(modelViewMatrix);
     mat4.translate(modelViewMatrix, modelViewMatrix, [
       mainPositionX,
@@ -1630,21 +1756,15 @@ function render() {
       mainPositionZ,
     ]);
     // Rotate the sphere around its own axis
-mat4.rotate(modelViewMatrix, modelViewMatrix, sphereRotationX, [1, 0, 0]);
-mat4.rotate(modelViewMatrix, modelViewMatrix, sphereRotationY, [0, 1, 0]);
-mat4.rotate(modelViewMatrix, modelViewMatrix, sphereRotationZ, [0, 0, 1]);
-
-
-
-
-
+    mat4.rotate(modelViewMatrix, modelViewMatrix, sphereRotationX, [1, 0, 0]);
+    mat4.rotate(modelViewMatrix, modelViewMatrix, sphereRotationY, [0, 1, 0]);
+    mat4.rotate(modelViewMatrix, modelViewMatrix, sphereRotationZ, [0, 0, 1]);
 
     // Set clear color and clear the canvas
     gl.enable(gl.DEPTH_TEST);
 
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    
     // Use shader program and bind vertex buffer for Sphere 1
     gl.useProgram(shaderProgram1);
     gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer1);
@@ -1654,12 +1774,10 @@ mat4.rotate(modelViewMatrix, modelViewMatrix, sphereRotationZ, [0, 0, 1]);
     gl.enableVertexAttribArray(positionAttribLocation1);
     gl.enableVertexAttribArray(texCoordAttribLocation1); //texture---------------------------
     gl.vertexAttribPointer(positionAttribLocation1, 3, gl.FLOAT, false, 0, 0);
-    gl.vertexAttribPointer(texCoordAttribLocation1, 2, gl.FLOAT, false, 0, 0);  //texture---------------------------
-
+    gl.vertexAttribPointer(texCoordAttribLocation1, 2, gl.FLOAT, false, 0, 0); //texture---------------------------
 
     gl.enableVertexAttribArray(normalAttribLocation1);
     gl.vertexAttribPointer(normalAttribLocation1, 3, gl.FLOAT, false, 0, 0); //normal*********
-
 
     const normalMatrix1 = mat3.create(); // Normal ***************
     mat3.normalFromMat4(normalMatrix1, modelViewMatrix); // Normal ***************
@@ -1672,14 +1790,11 @@ mat4.rotate(modelViewMatrix, modelViewMatrix, sphereRotationZ, [0, 0, 1]);
     // Activate texture unit, bind texture, and set uniform
     gl.activeTexture(gl.TEXTURE0); //texture---------------------------
     gl.bindTexture(gl.TEXTURE_2D, texture1); //texture---------------------------
-    
+
     gl.uniform1i(textureLocation1, 0); //texture---------------------------
-    
 
     // Draw Sphere 1
     gl.drawElements(gl.TRIANGLES, indices1.length, gl.UNSIGNED_SHORT, 0);
-
-
 
     // Update model-view matrix for translation of Sphere 1
     mat4.lookAt(
@@ -1689,38 +1804,49 @@ mat4.rotate(modelViewMatrix, modelViewMatrix, sphereRotationZ, [0, 0, 1]);
       [0.0, 1.0, 1.0]
     );
 
-
-
     // mat4.identity(modelViewMatrix);
     mat4.translate(modelViewMatrix, modelViewMatrix, [
       0,
       mainPositionY,
-      mainPositionZ-1500,
+      mainPositionZ - 1500,
     ]);
-// Use shader program and bind vertex buffer for Background
-gl.useProgram(shaderProgramBackground);
-gl.bindBuffer(gl.ARRAY_BUFFER, backgroundVertexBuffer);
+    // Use shader program and bind vertex buffer for Background
+    gl.useProgram(shaderProgramBackground);
+    gl.bindBuffer(gl.ARRAY_BUFFER, backgroundVertexBuffer);
 
-// Enable attributes and set attribute pointers for Background
-gl.enableVertexAttribArray(positionAttribLocationBackground);
-gl.vertexAttribPointer(positionAttribLocationBackground, 3, gl.FLOAT, false, 0, 0);
+    // Enable attributes and set attribute pointers for Background
+    gl.enableVertexAttribArray(positionAttribLocationBackground);
+    gl.vertexAttribPointer(
+      positionAttribLocationBackground,
+      3,
+      gl.FLOAT,
+      false,
+      0,
+      0
+    );
 
-// Set uniforms for transformation matrices for Background
-gl.uniformMatrix4fv(modelViewMatrixLocationBackground, false, modelViewMatrix);
-gl.uniformMatrix4fv(projectionMatrixLocationBackground, false, projectionMatrix);
+    // Set uniforms for transformation matrices for Background
+    gl.uniformMatrix4fv(
+      modelViewMatrixLocationBackground,
+      false,
+      modelViewMatrix
+    );
+    gl.uniformMatrix4fv(
+      projectionMatrixLocationBackground,
+      false,
+      projectionMatrix
+    );
 
-// Activate texture unit, bind texture, and set uniform for Background
-gl.activeTexture(gl.TEXTURE1);
-gl.bindTexture(gl.TEXTURE_2D, backgroundTexture);
-gl.uniform1i(textureLocationBackground, 1);
+    // Activate texture unit, bind texture, and set uniform for Background
+    gl.activeTexture(gl.TEXTURE1);
+    gl.bindTexture(gl.TEXTURE_2D, backgroundTexture);
+    gl.uniform1i(textureLocationBackground, 1);
 
-// Draw Background
-gl.drawArrays(gl.TRIANGLE_STRIP, 0, backgroundVertices.length / 3);
-
+    // Draw Background
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, backgroundVertices.length / 3);
 
     // Render tiles
-renderTiles();
-
+    renderTiles();
 
     // Render Box obstacles
     renderBoxes();
@@ -1737,9 +1863,7 @@ renderTiles();
 
     //HANDLE COLLISION
     handleCollisions();
-
   }
-
 
   // Request the next frame
   requestAnimationFrame(render);
@@ -1749,15 +1873,13 @@ renderTiles();
 
 // Start the rendering loop
 
-function startGame(){
+function startGame() {
   // Get the audio element
   var audio = document.getElementById("music");
   document.getElementById("myCanvas").style.display = "block";
   // Play the audio
   audio.play();
-  document.getElementById("menuOverlayStarting").style.display ="none";
+  document.getElementById("menuOverlayStarting").style.display = "none";
   introStartTime = Date.now();
   render();
-  
 }
-

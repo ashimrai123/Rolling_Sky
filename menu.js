@@ -44,38 +44,33 @@ function hidePausedMenu() {
 
 /* -------------------------------------------------- TRY AGAIN MENU ------------------------------------------------------------------------------- */
 
-
-function resetPositions(){
+function resetPositions() {
   mainPositionX = 0;
   mainPositionY = 0.4;
   mainPositionZ = -9.0;
-  
-cameraPosition[0] = 0; // X-coordinate of the camera
-cameraPosition[1] = 5; // Y-coordinate of the camera (height)
-cameraPosition[2] = 5; // Z-coordinate of the camera
 
-//Reset speed
-increasingSpeedZup = speedZ;
- increasingSpeedZdown = speedZ;
- maxSpeeding = speedZ + 0.05;
- increasingSpeedXright = speedX;
- increasingSpeedXleft = speedX;
+  cameraPosition[0] = 0; // X-coordinate of the camera
+  cameraPosition[1] = 5; // Y-coordinate of the camera (height)
+  cameraPosition[2] = 5; // Z-coordinate of the camera
+
+  //Reset speed
+  increasingSpeedZup = speedZ;
+  increasingSpeedZdown = speedZ;
+  maxSpeeding = speedZ + 0.05;
+  increasingSpeedXright = speedX;
+  increasingSpeedXleft = speedX;
 }
-
-
-
 
 //TRY AGAIN BUTTON
 function tryAgain() {
   // Reset ball position
- resetPositions();
+  resetPositions();
   hideTryAgainMenu();
   tryAgainFlag = false;
 
   // Clear the canvas
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 }
-
 
 let tryAgainFlag;
 
@@ -93,17 +88,12 @@ function hideTryAgainMenu() {
   document.getElementById("menuOverlayTryAgain").style.display = "none";
 }
 
-
-
 /* -------------------------------------------------- WIN GAME MENU ------------------------------------------------------------------------------- */
 
-
-function winGameMenu(){
+function winGameMenu() {
   document.getElementById("menuOverlayWin").style.display = "block";
   endTileReached = true;
-
 }
-
 
 function playAgain() {
   introStartTime = Date.now();
@@ -111,8 +101,4 @@ function playAgain() {
 
   introStart = true;
   document.getElementById("menuOverlayWin").style.display = "none";
-
 }
-
-
-
