@@ -1,0 +1,99 @@
+#myCanvas {
+  width: 100%;
+}
+
+#menuOverlayStarting {
+  position: absolute;
+  top: 6%;
+  left: 10%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+#menuOverlayPaused {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  display: none;
+}
+
+#menuOverlayTryAgain {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 30px;
+  display: none;
+}
+
+#menuOverlayWin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  display: none;
+}
+
+.controls {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: center;
+}
+
+.titleHead {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.arrows,
+.spacebar,
+.letterP,
+.wasd {
+  height: 300px;
+}
+
+.startButton {
+  padding: 20px;
+  font-size: 38px;
+  border-radius: 20px;
+  color: white;
+  background-color: red;
+  font-weight: 700;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.startButton:hover {
+  background-color: #2980b9;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.goal {
+  font-size: 30px;
+  background-color: aliceblue;
+  color: #2980b9;
+}
+
+.playAgainButton {
+  padding: 20px;
+  font-size: 38px;
+  border-radius: 20px;
+}

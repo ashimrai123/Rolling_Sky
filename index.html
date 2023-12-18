@@ -5,10 +5,55 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rolling Sky</title>
+    <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <h2>ROLLING SKY</h2>
-    <canvas id="myCanvas" width="1200" height="800"></canvas>
+    <canvas id="myCanvas" width="1600" height="700"></canvas>
+    <div id="menuOverlayStarting">
+      <div class="titleHead"><h1>Rolling Sky</h1></div>
+      <div class="goal">
+        Goal: Reach the End without colliding with any Obstacle! Good Luck!
+      </div>
+      <h2>Controls:</h2>
+      <div class="controls">
+        <div>
+          <img src="./arrows.jpg" class="arrows" />
+          <h2>Movement</h2>
+        </div>
+        <div>
+          <img src="./spacebar.jpg" class="spacebar" />
+          <h2>Jump</h2>
+        </div>
+        <div>
+          <img src="./wasd.jpg" class="wasd" />
+          <h2>Camera Movement</h2>
+        </div>
+        <div>
+          <img src="./letter_p.png" class="letterP" />
+          <h2>Pause Game</h2>
+        </div>
+      </div>
+      <button class="startButton" onclick="startGame()">Start Game</button>
+    </div>
+    <div id="menuOverlayPaused">
+      <h1>Game Paused</h1>
+      <button onclick="resumeGame()"><img src="./arrow-right.svg" /></button>
+    </div>
+    <div id="menuOverlayTryAgain">
+      <h1>Try Again</h1>
+      <button onclick="tryAgain()"><img src="retry.svg" /></button>
+    </div>
+    <div id="menuOverlayWin">
+      <h1>You Win!</h1>
+      <img src="./trophy.png" />
+      <button class="playAgainButton" onclick="playAgain()">Play Again</button>
+    </div>
+
+    <audio id="music" controls style="display: none">
+      <source src="legendary.mp3" type="audio/mp3" />
+      Your browser does not support the audio tag.
+    </audio>
+
     <!-- gl-matrix: Matrix and vector operations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.4.0/gl-matrix.js"></script>
     <script src="./constants.js"></script>
