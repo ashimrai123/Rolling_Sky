@@ -4,6 +4,8 @@
 
 #menuOverlayStarting {
   position: absolute;
+  top: 1%;
+  left: 1%;
   background-color: white;
   padding: 20px;
   border-radius: 10px;
