@@ -10,25 +10,25 @@
   <body>
     <canvas id="myCanvas" width="1600" height="700"></canvas>
     <div id="menuOverlayStarting">
-      <div class="titleHead"><h1>Rolling Sky</h1></div>
+      <div class="titleHead">Rolling Sky</div>
       <div class="goal">
         Goal: Reach the End without colliding with any Obstacle! Good Luck!
       </div>
-      <h2>Controls:</h2>
+      <div class="controlsWord">Controls:</div>
       <div class="controls">
-        <div>
+        <div class="keys">
           <img src="./arrows.jpg" class="arrows" />
           <h2>Movement</h2>
         </div>
-        <div>
+        <div class="keys">
           <img src="./spacebar.jpg" class="spacebar" />
           <h2>Jump</h2>
         </div>
-        <div>
+        <div class="keys">
           <img src="./wasd.jpg" class="wasd" />
           <h2>Camera Movement</h2>
         </div>
-        <div>
+        <div class="keys">
           <img src="./letter_p.png" class="letterP" />
           <h2>Pause Game</h2>
         </div>
@@ -37,11 +37,15 @@
     </div>
     <div id="menuOverlayPaused">
       <h1>Game Paused</h1>
-      <button onclick="resumeGame()"><img src="./arrow-right.svg" /></button>
+      <button onclick="resumeGame()">
+        <img class="resumeButton" src="./arrow-right.svg" />
+      </button>
     </div>
     <div id="menuOverlayTryAgain">
       <h1>Try Again</h1>
-      <button onclick="tryAgain()"><img src="retry.svg" /></button>
+      <button onclick="tryAgain()">
+        <img class="tryAgainButton" src="retry.svg" />
+      </button>
     </div>
     <div id="menuOverlayWin">
       <h1>You Win!</h1>
@@ -49,7 +53,7 @@
       <button class="playAgainButton" onclick="playAgain()">Play Again</button>
     </div>
 
-    <audio id="music" controls style="display: none">
+    <audio id="music" style="display: none">
       <source src="legendary.mp3" type="audio/mp3" />
       Your browser does not support the audio tag.
     </audio>

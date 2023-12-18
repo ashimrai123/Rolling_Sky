@@ -100,11 +100,14 @@ function hideTryAgainMenu() {
 
 function winGameMenu(){
   document.getElementById("menuOverlayWin").style.display = "block";
+  endTileReached = true;
+
 }
 
 
 function playAgain() {
   introStartTime = Date.now();
+  endTileReached = false;
 
   introStart = true;
   document.getElementById("menuOverlayWin").style.display = "none";

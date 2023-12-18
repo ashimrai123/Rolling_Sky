@@ -19,37 +19,6 @@ gl.clear(gl.COLOR_BUFFER_BIT);
 
 
 
-// Initialize Web Audio API
-const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-const musicElement = document.getElementById("music");
-const musicSource = audioContext.createMediaElementSource(musicElement);
-const musicGainNode = audioContext.createGain();
-
-// Connect the audio nodes
-musicSource.connect(musicGainNode);
-musicGainNode.connect(audioContext.destination);
-
-// Set the initial volume (optional)
-musicGainNode.gain.value = 0.5; // Adjust the volume between 0 and 1
-
-// Play music
-
-
-
-// Play the music
-function playMusic() {
-  musicElement.play();
-}
-
-// Pause the music
-function pauseMusic() {
-  musicElement.pause();
-}
-
-// Adjust the volume (0 to 1)
-function setVolume(volume) {
-  musicGainNode.gain.value = volume;
-}
 
 /* ------------------------------------------ BACKGROUND SETUP --------------------------------------------------------------------*/
 const backgroundVertices = [
@@ -1588,20 +1557,12 @@ let sphereRotationAngle = 0;
 
 /* --------------------------------------------- RENDER LOOP --------------------------------------------------------------------*/
 
-
+let endTileReached = false;
 
 // Rendering Loop
 function render() {
 
-  // Connect the audio nodes
-musicSource.connect(musicGainNode);
-musicGainNode.connect(audioContext.destination);
 
-// Set the initial volume (optional)
-musicGainNode.gain.value = 0.5; // Adjust the volume between 0 and 1
-
-
-  musicElement.play();
 
 
   // show camera introduction 
@@ -1617,7 +1578,7 @@ musicGainNode.gain.value = 0.5; // Adjust the volume between 0 and 1
   // run if game is not paused
   if (!pauseGame) {
     
-    if(mainPositionY > -0.9){
+    if(mainPositionY > -0.9 && !endTileReached){
       handleKeys();
 
     }
@@ -1793,6 +1754,11 @@ renderTiles();
 // Start the rendering loop
 
 function startGame(){
+  // Get the audio element
+  var audio = document.getElementById("music");
+
+  // Play the audio
+  audio.play();
   document.getElementById("menuOverlayStarting").style.display ="none";
   introStartTime = Date.now();
   render();
